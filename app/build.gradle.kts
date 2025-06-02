@@ -44,7 +44,9 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
 
-    implementation(libs.lifecycle)
+    implementation(libs.lifecycle.viewmodel)
+    implementation(libs.lifecycle.livedata)
+    implementation(libs.lifecycle.runtime)
     implementation(libs.annotationprocesor)
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
