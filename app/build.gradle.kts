@@ -35,6 +35,9 @@ android {
             excludes.add("META-INF/LICENSE.md")
         }
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -48,9 +51,16 @@ dependencies {
     implementation(libs.lifecycle.livedata)
     implementation(libs.lifecycle.runtime)
     implementation(libs.annotationprocesor)
+
+    implementation(libs.stetho)
+    implementation(libs.stetho.okhttp3)
+
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp.logging)
+    
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

@@ -9,10 +9,14 @@ activity = "1.10.1"
 constraintlayout = "2.2.1"
 
 lifecycle = "2.6.2"
-annotationprocesor = "2.3.1"
+annotationProcesor = "2.3.1"
 retrofit = "2.9.0"
 gson = "2.9.0"
 logging = "5.0.0-alpha.2"
+navigationFragment = "2.9.0"
+navigationUi = "2.9.0"
+stetho = "1.5.1"
+stethoOkhttp3 = "1.5.1"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -26,11 +30,15 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
 lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+annotationprocesor = {group = "androidx.lifecycle", name = "lifecycle-compiler", version.ref = "annotationProcesor"}
 
-annotationprocesor = {group = "androidx.lifecycle", name = "lifecycle-compiler", version.ref = "annotationprocesor"}
+stetho = { group = "com.facebook.stetho", name = "stetho", version.ref = "stetho"}
+stetho-okhttp3 = { group = "com.facebook.stetho", name = "stetho-okhttp3", version.ref = "stethoOkhttp3"}
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "gson" }
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logging" }
+navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
+navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
 
 
 [plugins]
