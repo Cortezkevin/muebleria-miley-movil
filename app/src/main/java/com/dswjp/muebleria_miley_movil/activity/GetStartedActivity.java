@@ -1,26 +1,30 @@
 package com.dswjp.muebleria_miley_movil.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.dswjp.muebleria_miley_movil.R;
+import com.dswjp.muebleria_miley_movil.databinding.ActivityGetStartedBinding;
 
 public class GetStartedActivity extends AppCompatActivity {
+    private ActivityGetStartedBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_get_started);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.getStarted), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        binding = ActivityGetStartedBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        this.init();
+    }
+
+    private void init() {
+
+        binding.btnStart.setOnClickListener(v -> {
+            Toast.makeText(this, "toast init getstarted", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, LoginActivity.class));
         });
     }
 }

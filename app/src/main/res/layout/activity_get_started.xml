@@ -9,8 +9,8 @@
     android:padding="24dp"
     tools:context=".activity.GetStartedActivity">
 
-    <Button
-        android:id="@+id/buttonStart"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnStart"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:text="@string/label_getstarted"

@@ -7,19 +7,23 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.dswjp.muebleria_miley_movil.activity.ui.home.HomeFragment"
+        android:name="com.dswjp.muebleria_miley_movil.activity.fragment.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.dswjp.muebleria_miley_movil.activity.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
+        android:id="@+id/nav_cart"
+        android:name="com.dswjp.muebleria_miley_movil.activity.fragment.CartFragment"
+        android:label="@string/nav_cart"
+        tools:layout="@layout/fragment_cart" />
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.dswjp.muebleria_miley_movil.activity.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_favorite"
+        android:name="com.dswjp.muebleria_miley_movil.activity.fragment.FavoriteFragment"
+        android:label="@string/nav_favorite"
+        tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.dswjp.muebleria_miley_movil.activity.fragment.ProfileFragment"
+        android:label="@string/nav_favorite"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
