@@ -52,15 +52,37 @@ dependencies {
     implementation(libs.lifecycle.runtime)
     implementation(libs.annotationprocesor)
 
-    implementation(libs.stetho)
-    implementation(libs.stetho.okhttp3)
-
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp.logging)
+
+    implementation(libs.dagger.android)
+    annotationProcessor(libs.dagger.compiler)
+
+    implementation(libs.picasso)
+
+    implementation(libs.stetho)
+    implementation(libs.stetho.okhttp3)
+
+    implementation(libs.material.spinner)
+
+    implementation(libs.mail)
+    implementation(libs.activation)
+
+    implementation(libs.maps)
+    implementation(libs.places)
+
+    implementation(libs.sweet.alert)
+
+    implementation(libs.circleimageview)
+
+    implementation(libs.glide)
     
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+
+    implementation(libs.android.image.slider)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

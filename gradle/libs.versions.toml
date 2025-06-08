@@ -13,10 +13,23 @@ annotationProcesor = "2.3.1"
 retrofit = "2.9.0"
 gson = "2.9.0"
 logging = "5.0.0-alpha.2"
-navigationFragment = "2.9.0"
-navigationUi = "2.9.0"
+dagger = "2.35.1"
+dagger-compiler = "2.33"
+picasso = "2.71828"
 stetho = "1.5.1"
 stethoOkhttp3 = "1.5.1"
+material-spinner = "2.0.0"
+mail = "1.6.6"
+maps = "17.0.1"
+places = "17.0.0"
+sweet-alert = "1.6.2"
+circleimageview = "3.1.0"
+glide = "4.11.0"
+
+navigationFragment = "2.9.0"
+navigationUi = "2.9.0"
+
+autoimageslider = "1.4.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -32,14 +45,36 @@ lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-
 lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 annotationprocesor = {group = "androidx.lifecycle", name = "lifecycle-compiler", version.ref = "annotationProcesor"}
 
-stetho = { group = "com.facebook.stetho", name = "stetho", version.ref = "stetho"}
-stetho-okhttp3 = { group = "com.facebook.stetho", name = "stetho-okhttp3", version.ref = "stethoOkhttp3"}
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "gson" }
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logging" }
+
+dagger-android = { module = "com.google.dagger:dagger-android", version.ref = "dagger" }
+dagger-compiler = { module = "com.google.dagger:dagger-android-processor", version.ref = "dagger-compiler" }
+
+picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
+
+stetho = { group = "com.facebook.stetho", name = "stetho", version.ref = "stetho"}
+stetho-okhttp3 = { group = "com.facebook.stetho", name = "stetho-okhttp3", version.ref = "stethoOkhttp3"}
+
+material-spinner = { module = "com.github.ganfra:material-spinner", version.ref = "material-spinner" }
+
+mail = { module = "com.sun.mail:android-mail", version.ref = "mail" }
+activation = { module = "com.sun.mail:android-activation", version.ref = "mail" }
+
+maps = { module = "com.google.android.gms:play-services-maps", version.ref = "maps" }
+places = { module = "com.google.android.gms:play-services-places", version.ref = "places" }
+
+sweet-alert = { module = "com.github.f0ris.sweetalert:library", version.ref = "sweet-alert" }
+
+circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
+
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
 
+android-image-slider = { module = "com.github.smarteist:Android-Image-Slider", version.ref = "autoimageslider" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
