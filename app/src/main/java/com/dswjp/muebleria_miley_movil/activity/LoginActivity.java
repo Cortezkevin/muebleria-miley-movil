@@ -53,6 +53,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        binding.txtNewUser.setOnClickListener(v -> {
+            Intent intent = new Intent(this, RegisterUserActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.left_in, R.anim.left_out);
+        });
+
         binding.edtMail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -89,7 +95,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void toastOk(String message) {
         LayoutInflater layoutInflater = getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.custom_toast_ok, (ViewGroup) findViewById(R.id.ll_custom_ok));
+        ViewGroup root = findViewById(R.id.ll_custom_ok);
+        View view = layoutInflater.inflate(R.layout.custom_toast_ok, root, false);
         TextView txtMensajeToastOk = view.findViewById(R.id.txtMensajeToastOk);
         txtMensajeToastOk.setText(message);
 
@@ -101,7 +108,8 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void toastError(String message) {
         LayoutInflater layoutInflater = getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.custom_toast_error, (ViewGroup) findViewById(R.id.ll_custom_error));
+        ViewGroup root = findViewById(R.id.ll_custom_ok);
+        View view = layoutInflater.inflate(R.layout.custom_toast_error, root, false);
         TextView txtMensajeToastOk = view.findViewById(R.id.txtMensajeToastError);
         txtMensajeToastOk.setText(message);
 
@@ -111,7 +119,6 @@ public class LoginActivity extends AppCompatActivity {
         toast.setView(view);
         toast.show();
     }
-
     private boolean validate() {
         boolean retorno = true;
         String usuario, password;

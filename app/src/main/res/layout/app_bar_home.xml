@@ -42,6 +42,5 @@
             android:elevation="0dp"
             app:menu="@menu/bottom_nav_menu"
             app:labelVisibilityMode="labeled"/>
-
     </com.google.android.material.bottomappbar.BottomAppBar>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
