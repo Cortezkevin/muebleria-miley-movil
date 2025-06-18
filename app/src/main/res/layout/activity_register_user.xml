@@ -144,7 +144,7 @@
                                 android:orientation="horizontal">
 
                                 <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/txtInputNameUser"
+                                    android:id="@+id/txtInputFirstName"
                                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
                                     app:startIconDrawable="@drawable/ic_person">
 
                                     <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/edtNameUser"
+                                        android:id="@+id/edtFirstName"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/san_francisco"
@@ -166,33 +166,15 @@
                                 android:orientation="horizontal">
 
                                 <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/txtInputApellidoPaternoU"
+                                    android:id="@+id/txtLastName"
                                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                    android:layout_width="0dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginEnd="10dp"
-                                    android:layout_weight="1"
-                                    android:hint="Apellido Paterno"
+                                    android:hint="Ingrese sus apellidos"
                                     app:startIconDrawable="@drawable/ic_person">
 
                                     <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/edtApellidoPaternoU"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/san_francisco"
-                                        android:textSize="15sp" />
-                                </com.google.android.material.textfield.TextInputLayout>
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/txtInputApellidoMaternoU"
-                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:hint="Apellido Materno"
-                                    app:startIconDrawable="@drawable/ic_person">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/edtApellidoMaternoU"
+                                        android:id="@+id/edtLastName"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/san_francisco"
@@ -445,7 +427,7 @@
                                 </com.google.android.material.textfield.TextInputLayout>
 
                                 <com.google.android.material.button.MaterialButton
-                                    android:id="@+id/btnGuardarDatos"
+                                    android:id="@+id/btnRegisterUser"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="end"

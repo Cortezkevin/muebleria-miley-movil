@@ -1,12 +1,15 @@
 package com.dswjp.muebleria_miley_movil.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.RenderEffect;
 import android.graphics.Shader;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +19,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.dswjp.muebleria_miley_movil.R;
 import com.dswjp.muebleria_miley_movil.databinding.ActivityLoginBinding;
+import com.dswjp.muebleria_miley_movil.dto.LoginUserDTO;
+import com.dswjp.muebleria_miley_movil.dto.security.JwtTokenDTO;
+import com.dswjp.muebleria_miley_movil.utils.DateSerializer;
+import com.dswjp.muebleria_miley_movil.utils.TimeSerializer;
+import com.dswjp.muebleria_miley_movil.viewmodel.AuthViewModel;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.sql.Date;
+import java.sql.Time;
 
 public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
+    private AuthViewModel authViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        this.initViewModel();
         this.init();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -38,13 +55,39 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private void initViewModel() {
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+    }
     private void init() {
-        binding.btnIniciarSesion.setOnClickListener(v -> {
+        binding.btnLogin.setOnClickListener(v -> {
             try {
                 if (validate()) {
-                    //Toast.makeText(this, "toast init getstarted", Toast.LENGTH_SHORT).show();
-                    toastOk("credenciales validas");
-                    startActivity(new Intent(this, MainActivity.class));
+                    String email = binding.edtMail.getText().toString().trim();
+                    String password = binding.edtPassword.getText().toString().trim();
+                    LoginUserDTO loginUserDTO = new LoginUserDTO(email, password);
+                    authViewModel.login(loginUserDTO).observe(this, response -> {
+                        if (response != null) {
+                            toastOk(response.getMessage());
+
+                            JwtTokenDTO jwtTokenDTO = response.getContent();
+                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            final Gson gson = new GsonBuilder()
+                                    .registerTypeAdapter(Date.class, new DateSerializer())
+                                    .registerTypeAdapter(Time.class, new TimeSerializer())
+                                    .create();
+                            editor.putString("jwttokendto", gson.toJson(jwtTokenDTO, new TypeToken<JwtTokenDTO>(){
+
+                            }.getType()));
+                            editor.apply();
+                            binding.edtMail.setText("");
+                            binding.edtPassword.setText("");
+                            startActivity(new Intent(this, MainActivity.class));
+                        } else {
+                            toastError("credenciales inválidas");
+                        }
+                    });
+
                 } else {
                     toastError("por favor complete los campos");
                 }
@@ -91,6 +134,18 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String pref = preferences.getString("jwttokendto", "");
+        if (!pref.equals("")) {
+            toastOk("se detecto una sesión activa, el login será omitido");
+            this.startActivity(new Intent(this, MainActivity.class));
+            this.overridePendingTransition(R.anim.left_in, R.anim.left_out);
+        }
     }
 
     private void toastOk(String message) {
