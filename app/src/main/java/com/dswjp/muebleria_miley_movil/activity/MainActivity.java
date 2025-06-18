@@ -1,17 +1,19 @@
 package com.dswjp.muebleria_miley_movil.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.dswjp.muebleria_miley_movil.R;
 import com.dswjp.muebleria_miley_movil.databinding.ActivityMainBinding;
-import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //setSupportActionBar(binding.appBarHome.toolbar);
+
+
+        setSupportActionBar(binding.appBarHome.toolbar);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
         NavigationUI.setupWithNavController(binding.appBarHome.bottomNavigation, navController);
 
@@ -42,6 +46,24 @@ public class MainActivity extends AppCompatActivity {
         //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
         //NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);*/
         NavigationUI.setupWithNavController(binding.navView, navController);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.cerrarSesion) {
+            this.logout();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove("jwttokendto");
+        editor.apply();
+        this.finish();
+        this.overridePendingTransition(R.anim.left_in, R.anim.left_out);
     }
 
     @Override
