@@ -1,7 +1,5 @@
 package com.dswjp.muebleria_miley_movil.repository;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -10,8 +8,7 @@ import com.dswjp.muebleria_miley_movil.api.ConfigApi;
 import com.dswjp.muebleria_miley_movil.dto.LoginUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.NewUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.security.JwtTokenDTO;
-import com.dswjp.muebleria_miley_movil.entity.ResponseDTO;
-import com.dswjp.muebleria_miley_movil.entity.SuccessResponseDTO;
+import com.dswjp.muebleria_miley_movil.dto.security.SuccessResponseDTO;
 
 import retrofit2.Call;
 import retrofit2.Callback;

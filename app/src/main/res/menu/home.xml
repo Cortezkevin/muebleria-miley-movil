@@ -2,20 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/bolsaCompras"
-        android:icon="@drawable/icon_cart"
+        android:id="@+id/notification"
+        android:icon="@drawable/icon_notifications"
         android:title="Bolsa de Compras"
         app:showAsAction="ifRoom">
     </item>
     <item
         android:id="@+id/more"
         android:icon="@drawable/icon_more"
-        android:iconTint="@color/black"
+        android:iconTint="@color/white"
         android:title="Contáctanos"
         app:showAsAction="always">
         <menu>
             <item
-                android:id="@+id/cerrarSesion"
+                android:id="@+id/logout"
                 android:icon="@drawable/icon_logout"
                 android:title="Cerrar Sesión" />
         </menu>

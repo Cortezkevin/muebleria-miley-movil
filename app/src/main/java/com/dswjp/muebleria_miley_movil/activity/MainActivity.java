@@ -19,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-        private ActivityMainBinding binding;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
 
         setSupportActionBar(binding.appBarHome.toolbar);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.cerrarSesion) {
+        if (item.getItemId() == R.id.logout) {
             this.logout();
             return true;
         }

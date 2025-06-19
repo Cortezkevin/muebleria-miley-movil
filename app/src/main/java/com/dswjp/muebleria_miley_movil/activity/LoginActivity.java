@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -33,6 +34,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.sql.Date;
 import java.sql.Time;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -52,6 +55,8 @@ public class LoginActivity extends AppCompatActivity {
             ImageView imageView = findViewById(R.id.imgFondo);
             imageView.setRenderEffect(RenderEffect.createBlurEffect(50, 50, Shader.TileMode.MIRROR));
         }
+
+        this.onBack();
     }
 
     private void initViewModel() {
@@ -195,5 +200,30 @@ public class LoginActivity extends AppCompatActivity {
         return retorno;
     }
 
+    private void onBack() {
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Has oprimido el botón atrás")
+                        .setContentText("¿Quieres cerrar la aplicación?")
+                        .setCancelText("No, Cancelar!")
+                        .setConfirmText("Sí, Cerrar")
+                        .showCancelButton(true)
+                        .setCancelClickListener(sDialog -> {
+                            sDialog.dismissWithAnimation();
+                            new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Operación cancelada")
+                                    .setContentText("No saliste de la app")
+                                    .show();
+                        })
+                        .setConfirmClickListener(sweetAlertDialog -> {
+                            sweetAlertDialog.dismissWithAnimation();
+                            finishAffinity();
+                        })
+                        .show();
+            }
+        });
+    }
 
 }

@@ -1,6 +1,6 @@
-package com.dswjp.muebleria_miley_movil.entity;
+package com.dswjp.muebleria_miley_movil.dto.security;
 
-import lombok.NoArgsConstructor;
+import com.dswjp.muebleria_miley_movil.dto.ResponseDTO;
 
 public class SuccessResponseDTO<T> extends ResponseDTO {
     private T content;
