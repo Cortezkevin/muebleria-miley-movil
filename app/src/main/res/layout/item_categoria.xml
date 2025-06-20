@@ -8,11 +8,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:layout_gravity="center"
+
         android:background="@drawable/btn_cat_background">
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/imgCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -24,8 +24,8 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textView8"
-        android:layout_width="match_parent"
+        android:id="@+id/txtCategory"
+        android:layout_width="55dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/btn_cat"

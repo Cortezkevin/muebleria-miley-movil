@@ -1,6 +1,4 @@
-package com.dswjp.muebleria_miley_movil.dto.security;
-
-import com.dswjp.muebleria_miley_movil.dto.ResponseDTO;
+package com.dswjp.muebleria_miley_movil.commons;
 
 public class SuccessResponseDTO<T> extends ResponseDTO {
     private T content;

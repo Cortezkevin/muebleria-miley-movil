@@ -3,7 +3,7 @@ package com.dswjp.muebleria_miley_movil.api;
 import com.dswjp.muebleria_miley_movil.dto.LoginUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.NewUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.security.JwtTokenDTO;
-import com.dswjp.muebleria_miley_movil.dto.security.SuccessResponseDTO;
+import com.dswjp.muebleria_miley_movil.commons.SuccessResponseDTO;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

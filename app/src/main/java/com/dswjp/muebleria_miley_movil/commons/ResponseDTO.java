@@ -1,4 +1,4 @@
-package com.dswjp.muebleria_miley_movil.dto;
+package com.dswjp.muebleria_miley_movil.commons;
 
 public abstract class ResponseDTO {
     protected String message;

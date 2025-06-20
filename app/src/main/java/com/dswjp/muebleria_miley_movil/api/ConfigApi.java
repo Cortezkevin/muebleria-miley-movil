@@ -21,6 +21,7 @@ public class ConfigApi {
     private static Retrofit  retrofit;
     private static String token = "";
     private static AuthApi authApi;
+    private static CategoryApi categoryApi;
 
     static {
         initClient();
@@ -38,7 +39,7 @@ public class ConfigApi {
                 .build();
     }
 
-    private static OkHttpClient getClient() {
+    public static OkHttpClient getClient() {
         HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
         loggin.level(HttpLoggingInterceptor.Level.BODY);
 
@@ -63,6 +64,13 @@ public class ConfigApi {
             authApi = retrofit.create(AuthApi.class);
         }
         return authApi;
+    }
+
+    public static CategoryApi getCategoryApi() {
+        if (categoryApi == null) {
+            categoryApi = retrofit.create(CategoryApi.class);
+        }
+        return categoryApi;
     }
 
 }

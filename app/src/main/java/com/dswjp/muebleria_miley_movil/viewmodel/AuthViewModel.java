@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData;
 import com.dswjp.muebleria_miley_movil.dto.LoginUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.NewUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.security.JwtTokenDTO;
-import com.dswjp.muebleria_miley_movil.dto.security.SuccessResponseDTO;
+import com.dswjp.muebleria_miley_movil.commons.SuccessResponseDTO;
 import com.dswjp.muebleria_miley_movil.repository.AuthRepository;
 
 public class AuthViewModel extends AndroidViewModel {

@@ -6,15 +6,19 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 
 import com.dswjp.muebleria_miley_movil.R;
+import com.dswjp.muebleria_miley_movil.adapter.CategoryAdapter;
 import com.dswjp.muebleria_miley_movil.adapter.SliderAdapter;
 import com.dswjp.muebleria_miley_movil.databinding.FragmentHomeBinding;
 import com.dswjp.muebleria_miley_movil.entity.SliderItem;
+import com.dswjp.muebleria_miley_movil.viewmodel.CategoryViewModel;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -26,9 +30,10 @@ import java.util.List;
 
 
 public class HomeFragment extends Fragment {
-
     private FragmentHomeBinding binding;
-    private SliderItem sliderItem;
+    private CategoryViewModel categoryViewModel;
+    private CategoryAdapter categoryAdapter;
+    private GridView gvCategories;
     private SliderAdapter sliderAdapter;
     private SliderView svCarrusel;
 
@@ -49,6 +54,10 @@ public class HomeFragment extends Fragment {
 
     private void init(View view) {
         svCarrusel = binding.svCarrusel;
+
+        ViewModelProvider vmp = new ViewModelProvider(this);
+        categoryViewModel = vmp.get(CategoryViewModel.class);
+        gvCategories = binding.gvCategorias;
     }
 
     private void loadData() {
@@ -58,6 +67,16 @@ public class HomeFragment extends Fragment {
         lista.add(new SliderItem(R.drawable.photocarrusel3, "carusel 3"));
         lista.add(new SliderItem(R.drawable.photocarrusel4, "carusel 4"));
         sliderAdapter.updateItem(lista);
+
+        categoryViewModel.listCategories().observe(getViewLifecycleOwner(), response -> {
+            if (response != null) {
+                categoryAdapter.clear();
+                categoryAdapter.addAll(response.getContent());
+                categoryAdapter.notifyDataSetChanged();
+            } else {
+                System.out.println("error al obtener las categorias activas");
+            }
+        });
     }
 
     private void initAdapter() {
@@ -70,6 +89,9 @@ public class HomeFragment extends Fragment {
         svCarrusel.setIndicatorUnselectedColor(Color.GRAY);
         svCarrusel.setScrollTimeInSec(4);
         svCarrusel.startAutoCycle();
+
+        categoryAdapter = new CategoryAdapter(getContext(), R.layout.item_categoria, new ArrayList<>());
+        gvCategories.setAdapter(categoryAdapter);
     }
 
 }
