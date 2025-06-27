@@ -22,6 +22,7 @@ public class ConfigApi {
     private static String token = "";
     private static AuthApi authApi;
     private static CategoryApi categoryApi;
+    private static ProductApi productApi;
 
     static {
         initClient();
@@ -71,6 +72,13 @@ public class ConfigApi {
             categoryApi = retrofit.create(CategoryApi.class);
         }
         return categoryApi;
+    }
+
+    public static ProductApi getProductApi() {
+        if (productApi == null) {
+            productApi = retrofit.create(ProductApi.class);
+        }
+        return productApi;
     }
 
 }

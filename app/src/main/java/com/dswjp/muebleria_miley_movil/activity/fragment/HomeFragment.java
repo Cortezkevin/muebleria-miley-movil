@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +17,13 @@ import android.widget.GridView;
 
 import com.dswjp.muebleria_miley_movil.R;
 import com.dswjp.muebleria_miley_movil.adapter.CategoryAdapter;
+import com.dswjp.muebleria_miley_movil.adapter.ProductAdapter;
 import com.dswjp.muebleria_miley_movil.adapter.SliderAdapter;
 import com.dswjp.muebleria_miley_movil.databinding.FragmentHomeBinding;
+import com.dswjp.muebleria_miley_movil.dto.catalog.ProductDTO;
 import com.dswjp.muebleria_miley_movil.entity.SliderItem;
 import com.dswjp.muebleria_miley_movil.viewmodel.CategoryViewModel;
+import com.dswjp.muebleria_miley_movil.viewmodel.ProductViewModel;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -36,6 +41,10 @@ public class HomeFragment extends Fragment {
     private GridView gvCategories;
     private SliderAdapter sliderAdapter;
     private SliderView svCarrusel;
+    private ProductViewModel productViewModel;
+    private RecyclerView rcvProductsPopular;
+    private ProductAdapter productAdapter;
+    private List<ProductDTO> productsPopular = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,10 +63,14 @@ public class HomeFragment extends Fragment {
 
     private void init(View view) {
         svCarrusel = binding.svCarrusel;
-
         ViewModelProvider vmp = new ViewModelProvider(this);
+
         categoryViewModel = vmp.get(CategoryViewModel.class);
         gvCategories = binding.gvCategorias;
+
+        rcvProductsPopular = view.findViewById(R.id.rcvProductPopular);
+        rcvProductsPopular.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        productViewModel = vmp.get(ProductViewModel.class);
     }
 
     private void loadData() {
@@ -77,6 +90,14 @@ public class HomeFragment extends Fragment {
                 System.out.println("error al obtener las categorias activas");
             }
         });
+
+        productViewModel.listProducts().observe(getViewLifecycleOwner(), response -> {
+            if (response != null && response.getContent() != null) {
+                productAdapter.updateItems(response.getContent());
+            } else {
+                productAdapter.updateItems(new ArrayList<>()); // prevención extra
+            }
+        });
     }
 
     private void initAdapter() {
@@ -92,6 +113,9 @@ public class HomeFragment extends Fragment {
 
         categoryAdapter = new CategoryAdapter(getContext(), R.layout.item_categoria, new ArrayList<>());
         gvCategories.setAdapter(categoryAdapter);
+
+        productAdapter = new ProductAdapter(productsPopular);
+        rcvProductsPopular.setAdapter(productAdapter);
     }
 
 }

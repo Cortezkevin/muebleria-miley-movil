@@ -6,15 +6,17 @@
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="55dp"
+        android:layout_width="75dp"
         android:layout_height="55dp"
-
+        android:layout_margin="5dp"
         android:background="@drawable/btn_cat_background">
 
         <ImageView
             android:id="@+id/imgCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,8 +27,9 @@
 
     <TextView
         android:id="@+id/txtCategory"
-        android:layout_width="55dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_marginTop="8dp"
         android:text="@string/btn_cat"
         android:textAlignment="center" />
