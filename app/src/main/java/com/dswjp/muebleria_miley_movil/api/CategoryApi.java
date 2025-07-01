@@ -2,6 +2,7 @@ package com.dswjp.muebleria_miley_movil.api;
 
 import com.dswjp.muebleria_miley_movil.commons.SuccessResponseDTO;
 import com.dswjp.muebleria_miley_movil.dto.catalog.CategoryDTO;
+import com.dswjp.muebleria_miley_movil.dto.catalog.DetailedProductDTO;
 
 import java.util.List;
 

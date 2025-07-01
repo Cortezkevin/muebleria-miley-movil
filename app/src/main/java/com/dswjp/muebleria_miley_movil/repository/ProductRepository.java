@@ -59,20 +59,20 @@ public class ProductRepository {
         return mld;
     }
 
-    /*public LiveData<SuccessResponseDTO<DetailedProductDTO>> getDetailsById(int id){
-        final MutableLiveData<SuccessResponseDTO<DetailedProductDTO>> mld = new MutableLiveData<>();
-        this.productApi.getDetailsById(id).enqueue(new Callback<SuccessResponseDTO<DetailedProductDTO>>() {
+    public LiveData<SuccessResponseDTO<List<ProductDTO>>> getByCategoryId(int id){
+        final MutableLiveData<SuccessResponseDTO<List<ProductDTO>>> mld = new MutableLiveData<>();
+        this.productApi.getByCategoryId(id).enqueue(new Callback<SuccessResponseDTO<List<ProductDTO>>>() {
             @Override
-            public void onResponse(Call<SuccessResponseDTO<DetailedProductDTO>> call, Response<SuccessResponseDTO<DetailedProductDTO>> response) {
+            public void onResponse(Call<SuccessResponseDTO<List<ProductDTO>>> call, Response<SuccessResponseDTO<List<ProductDTO>>> response) {
                 mld.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<SuccessResponseDTO<DetailedProductDTO>> call, Throwable t) {
+            public void onFailure(Call<SuccessResponseDTO<List<ProductDTO>>> call, Throwable t) {
                 mld.setValue(new SuccessResponseDTO<>());
                 t.printStackTrace();
             }
         });
         return mld;
-    }*/
+    }
 }

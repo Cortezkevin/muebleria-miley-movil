@@ -17,7 +17,7 @@ import android.widget.GridView;
 
 import com.dswjp.muebleria_miley_movil.R;
 import com.dswjp.muebleria_miley_movil.adapter.CategoryAdapter;
-import com.dswjp.muebleria_miley_movil.adapter.ProductAdapter;
+import com.dswjp.muebleria_miley_movil.adapter.ProductPopularAdapter;
 import com.dswjp.muebleria_miley_movil.adapter.SliderAdapter;
 import com.dswjp.muebleria_miley_movil.databinding.FragmentHomeBinding;
 import com.dswjp.muebleria_miley_movil.dto.catalog.ProductDTO;
@@ -27,8 +27,6 @@ import com.dswjp.muebleria_miley_movil.viewmodel.ProductViewModel;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +41,7 @@ public class HomeFragment extends Fragment {
     private SliderView svCarrusel;
     private ProductViewModel productViewModel;
     private RecyclerView rcvProductsPopular;
-    private ProductAdapter productAdapter;
+    private ProductPopularAdapter productAdapter;
     private List<ProductDTO> productsPopular = new ArrayList<>();
 
     @Override
@@ -114,7 +112,7 @@ public class HomeFragment extends Fragment {
         categoryAdapter = new CategoryAdapter(getContext(), R.layout.item_categoria, new ArrayList<>());
         gvCategories.setAdapter(categoryAdapter);
 
-        productAdapter = new ProductAdapter(productsPopular);
+        productAdapter = new ProductPopularAdapter(productsPopular);
         rcvProductsPopular.setAdapter(productAdapter);
     }
 

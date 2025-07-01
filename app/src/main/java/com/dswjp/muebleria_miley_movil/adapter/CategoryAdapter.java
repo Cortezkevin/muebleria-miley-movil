@@ -1,6 +1,7 @@
 package com.dswjp.muebleria_miley_movil.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.dswjp.muebleria_miley_movil.R;
+import com.dswjp.muebleria_miley_movil.activity.ProductsByCategoryActivity;
 import com.dswjp.muebleria_miley_movil.api.ConfigApi;
 import com.dswjp.muebleria_miley_movil.dto.catalog.CategoryDTO;
 import com.squareup.picasso.OkHttp3Downloader;
@@ -43,6 +45,12 @@ public class CategoryAdapter extends ArrayAdapter<CategoryDTO> {
                 .error(R.drawable.image_not_found)
                 .into(imgCategory);
         txtNameCategory.setText(categoryDTO.getName());
+
+        convertView.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), ProductsByCategoryActivity.class);
+            intent.putExtra("idCategory", categoryDTO.getId());
+            getContext().startActivity(intent);
+        });
         return convertView;
     }
 }

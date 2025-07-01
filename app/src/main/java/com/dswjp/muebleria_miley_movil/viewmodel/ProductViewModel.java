@@ -25,7 +25,7 @@ public class ProductViewModel extends AndroidViewModel {
         return this.productRepository.listProducts();
     }
 
-    /*public LiveData<SuccessResponseDTO<DetailedProductDTO>> getDetailsById(int id) {
-        return this.productRepository.getDetailsById(id);
-    }*/
+    public LiveData<SuccessResponseDTO<List<ProductDTO>>> getByCategoryId(int id) {
+        return this.productRepository.getByCategoryId(id);
+    }
 }

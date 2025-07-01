@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Imagen del producto -->
+            <ImageView
+                android:id="@+id/imgProductByCategory"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="Imagen del producto"
+                android:src="@drawable/photosofa" />
+
+            <!-- Detalles del producto -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp">
+
+                <!-- Marca -->
+                <TextView
+                    android:id="@+id/txtBrand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ROBERTA ALLEN"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#777777" />
+
+                <!-- Nombre -->
+                <TextView
+                    android:id="@+id/txtNameProductByCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtBrand"
+                    android:layout_marginTop="2dp"
+                    android:text="Cubrecama Viña Con Sherpa"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+                <!-- Vendedor -->
+                <TextView
+                    android:id="@+id/txtSeller"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtNameProductByCategory"
+                    android:layout_marginTop="2dp"
+                    android:text="Por Inversiones Miley"
+                    android:textSize="12sp"
+                    android:textColor="#888888" />
+
+                <!-- Precio y descuento -->
+                <LinearLayout
+                    android:id="@+id/priceContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtSeller"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/txtPriceByCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="S/149.90"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#D50000" />
+
+                    <TextView
+                        android:id="@+id/txtDiscount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-32%"
+                        android:textSize="12sp"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/bd_discount"
+                        android:padding="4dp"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+
+                <!-- Precio original -->
+                <TextView
+                    android:id="@+id/txtOriginalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/priceContainer"
+                    android:text="S/219.90"
+                    android:textSize="12sp"
+                    android:textColor="#999999" />
+
+                <!-- Rating -->
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtOriginalPrice"
+                    android:layout_marginTop="4dp"
+                    android:numStars="5"
+                    android:rating="4.5"
+                    android:stepSize="0.5"
+                    android:isIndicator="true" />
+
+                <!-- Botón Ordenar -->
+                <Button
+                    android:id="@+id/btnOrderByCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:backgroundTint="#8BC34A"
+                    android:text="Ordenar"
+                    android:textColor="#fff"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

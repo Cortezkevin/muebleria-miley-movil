@@ -17,6 +17,6 @@ public interface ProductApi {
     @GET(base + "/public")
     Call<SuccessResponseDTO<List<ProductDTO>>> getAll();
 
-    /*@GET(base + "/public/{id}")
-    Call<SuccessResponseDTO<DetailedProductDTO>> getDetailsById(@Path("id") int id);*/
+    @GET(base + "/public/{idCategory}")
+    Call<SuccessResponseDTO<List<ProductDTO>>> getByCategoryId(@Path("idCategory") int idCategory);
 }

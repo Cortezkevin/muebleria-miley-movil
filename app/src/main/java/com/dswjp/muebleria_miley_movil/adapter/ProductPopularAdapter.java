@@ -1,10 +1,8 @@
 package com.dswjp.muebleria_miley_movil.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,14 +17,13 @@ import com.dswjp.muebleria_miley_movil.dto.catalog.ProductDTO;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+public class ProductPopularAdapter extends RecyclerView.Adapter<ProductPopularAdapter.ViewHolder> {
     private List<ProductDTO> producstPopular;
 
-    public ProductAdapter(List<ProductDTO> productsPopular) {
+    public ProductPopularAdapter(List<ProductDTO> productsPopular) {
         this.producstPopular = productsPopular;
     }
 
