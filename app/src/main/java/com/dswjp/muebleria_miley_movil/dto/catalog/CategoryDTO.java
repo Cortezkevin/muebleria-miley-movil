@@ -1,6 +1,6 @@
 package com.dswjp.muebleria_miley_movil.dto.catalog;
 
-import com.dswjp.muebleria_miley_movil.entity.service.catalog.Category;
+import com.dswjp.muebleria_miley_movil.entity.catalog.Category;
 
 public class CategoryDTO {
     String id;

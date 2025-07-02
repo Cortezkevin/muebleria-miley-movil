@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
     private AuthViewModel authViewModel;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +71,11 @@ public class LoginActivity extends AppCompatActivity {
                     String email = binding.edtMail.getText().toString().trim();
                     String password = binding.edtPassword.getText().toString().trim();
                     LoginUserDTO loginUserDTO = new LoginUserDTO(email, password);
-                    authViewModel.login(loginUserDTO).observe(this, response -> {
-                        if (response != null) {
-                            toastOk(response.getMessage());
 
+                    authViewModel.login(loginUserDTO).observe(this, response -> {
+
+                        if (response.isSuccess()) {
+                            
                             JwtTokenDTO jwtTokenDTO = response.getContent();
                             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
                             SharedPreferences.Editor editor = preferences.edit();
@@ -88,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                             binding.edtPassword.setText("");
                             startActivity(new Intent(this, MainActivity.class));
                         } else {
-                            toastError("credenciales inválidas");
+                            toastError("credenciales invalidas");
                         }
                     });
 

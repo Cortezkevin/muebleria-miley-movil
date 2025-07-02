@@ -1,4 +1,4 @@
-package com.dswjp.muebleria_miley_movil.entity.service.catalog.feature;
+package com.dswjp.muebleria_miley_movil.entity.catalog.feature;
 
 import java.util.ArrayList;
 import java.util.List;

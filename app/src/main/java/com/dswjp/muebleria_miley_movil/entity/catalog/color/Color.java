@@ -1,4 +1,4 @@
-package com.dswjp.muebleria_miley_movil.entity.service.catalog.color;
+package com.dswjp.muebleria_miley_movil.entity.catalog.color;
 
 import java.util.ArrayList;
 import java.util.List;

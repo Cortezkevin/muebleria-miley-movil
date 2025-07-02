@@ -1,4 +1,4 @@
-package com.dswjp.muebleria_miley_movil.entity.service.catalog.image;
+package com.dswjp.muebleria_miley_movil.entity.catalog.image;
 
 import lombok.*;
 

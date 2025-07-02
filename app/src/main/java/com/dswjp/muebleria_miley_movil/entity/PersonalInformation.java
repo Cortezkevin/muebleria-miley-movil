@@ -1,6 +1,6 @@
-package com.dswjp.muebleria_miley_movil.entity.service;
+package com.dswjp.muebleria_miley_movil.entity;
 
-import com.dswjp.muebleria_miley_movil.entity.service.security.User;
+import com.dswjp.muebleria_miley_movil.entity.security.User;
 
 import java.time.LocalDate;
 

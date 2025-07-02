@@ -1,8 +1,8 @@
-package com.dswjp.muebleria_miley_movil.entity.service.catalog;
+package com.dswjp.muebleria_miley_movil.entity.catalog;
 
-import com.dswjp.muebleria_miley_movil.entity.service.catalog.feature.ProductFeature;
-import com.dswjp.muebleria_miley_movil.entity.service.catalog.image.DefaultProductImage;
-import com.dswjp.muebleria_miley_movil.entity.service.catalog.image.ProductImage;
+import com.dswjp.muebleria_miley_movil.entity.catalog.feature.ProductFeature;
+import com.dswjp.muebleria_miley_movil.entity.catalog.image.DefaultProductImage;
+import com.dswjp.muebleria_miley_movil.entity.catalog.image.ProductImage;
 import com.dswjp.muebleria_miley_movil.enums.AcquisitionType;
 
 import java.math.BigDecimal;

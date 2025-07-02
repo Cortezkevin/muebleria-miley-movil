@@ -1,5 +1,7 @@
 package com.dswjp.muebleria_miley_movil.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -9,6 +11,8 @@ import com.dswjp.muebleria_miley_movil.dto.LoginUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.NewUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.security.JwtTokenDTO;
 import com.dswjp.muebleria_miley_movil.commons.SuccessResponseDTO;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,13 +38,16 @@ public class AuthRepository {
         this.authApi.login(loginUserDTO).enqueue(new Callback<SuccessResponseDTO<JwtTokenDTO>>() {
             @Override
             public void onResponse(Call<SuccessResponseDTO<JwtTokenDTO>> call, Response<SuccessResponseDTO<JwtTokenDTO>> response) {
-                mld.setValue(response.body());
+                if (response.isSuccessful() && response.body() != null) {
+                    mld.setValue(response.body());
+                } else {
+                    mld.setValue(new SuccessResponseDTO<>());
+                }
             }
 
             @Override
             public void onFailure(Call<SuccessResponseDTO<JwtTokenDTO>> call, Throwable t) {
                 mld.setValue(new SuccessResponseDTO<>());
-                System.out.println(t.getMessage());
                 t.printStackTrace();
             }
         });
@@ -52,7 +59,11 @@ public class AuthRepository {
       this.authApi.registerUser(newUserDTO).enqueue(new Callback<SuccessResponseDTO<JwtTokenDTO>>() {
           @Override
           public void onResponse(Call<SuccessResponseDTO<JwtTokenDTO>> call, Response<SuccessResponseDTO<JwtTokenDTO>> response) {
-              mld.setValue(response.body());
+              if (response.isSuccessful() && response.body() != null) {
+                  mld.setValue(response.body());
+              } else {
+                  mld.setValue(new SuccessResponseDTO<>());
+              }
           }
 
           @Override

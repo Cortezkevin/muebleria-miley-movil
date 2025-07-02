@@ -1,6 +1,6 @@
-package com.dswjp.muebleria_miley_movil.entity.service.catalog.feature;
+package com.dswjp.muebleria_miley_movil.entity.catalog.feature;
 
-import com.dswjp.muebleria_miley_movil.entity.service.catalog.Product;
+import com.dswjp.muebleria_miley_movil.entity.catalog.Product;
 
 import lombok.*;
 

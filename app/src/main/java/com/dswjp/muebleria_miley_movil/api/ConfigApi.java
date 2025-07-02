@@ -17,6 +17,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConfigApi {
 
+    /*
+    ip en universidad
+    public static final String baseUrlE = "http://10.250.240.11:4000";*/
+
     public static final String baseUrlE = "http://192.168.18.10:4000";
     private static Retrofit  retrofit;
     private static String token = "";

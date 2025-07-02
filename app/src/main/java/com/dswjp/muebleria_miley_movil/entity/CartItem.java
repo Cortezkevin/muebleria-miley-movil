@@ -1,6 +1,6 @@
-package com.dswjp.muebleria_miley_movil.entity.service;
+package com.dswjp.muebleria_miley_movil.entity;
 
-import com.dswjp.muebleria_miley_movil.entity.service.catalog.Product;
+import com.dswjp.muebleria_miley_movil.entity.catalog.Product;
 
 import java.math.BigDecimal;
 

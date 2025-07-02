@@ -1,4 +1,4 @@
-package com.dswjp.muebleria_miley_movil.entity.service;
+package com.dswjp.muebleria_miley_movil.entity;
 
 import lombok.*;
 

@@ -1,7 +1,7 @@
-package com.dswjp.muebleria_miley_movil.entity.service.security;
+package com.dswjp.muebleria_miley_movil.entity.security;
 
-import com.dswjp.muebleria_miley_movil.entity.service.Cart;
-import com.dswjp.muebleria_miley_movil.entity.service.PersonalInformation;
+import com.dswjp.muebleria_miley_movil.entity.Cart;
+import com.dswjp.muebleria_miley_movil.entity.PersonalInformation;
 import com.dswjp.muebleria_miley_movil.enums.Status;
 
 import java.util.HashSet;

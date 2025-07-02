@@ -1,8 +1,11 @@
 package com.dswjp.muebleria_miley_movil.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +67,12 @@ public class RegisterUserActivity extends AppCompatActivity {
                 authViewModel.register(newUserDTO).observe(this, response -> {
                     if (response != null) {
                         toastOk("datos registrados");
+                        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                            Intent intent = new Intent(this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }, 3000);
+
                     } else {
                         toastError("no se pudo guardar datos");
                     }

@@ -1,4 +1,4 @@
-package com.dswjp.muebleria_miley_movil.entity.service.security;
+package com.dswjp.muebleria_miley_movil.entity.security;
 
 import com.dswjp.muebleria_miley_movil.enums.RolName;
 

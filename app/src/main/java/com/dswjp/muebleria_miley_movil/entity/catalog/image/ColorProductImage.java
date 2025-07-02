@@ -1,6 +1,6 @@
-package com.dswjp.muebleria_miley_movil.entity.service.catalog.image;
+package com.dswjp.muebleria_miley_movil.entity.catalog.image;
 
-import com.dswjp.muebleria_miley_movil.entity.service.catalog.color.ProductColor;
+import com.dswjp.muebleria_miley_movil.entity.catalog.color.ProductColor;
 
 import lombok.*;
 

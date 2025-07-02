@@ -1,7 +1,7 @@
-package com.dswjp.muebleria_miley_movil.entity.service.catalog.color;
+package com.dswjp.muebleria_miley_movil.entity.catalog.color;
 
-import com.dswjp.muebleria_miley_movil.entity.service.catalog.Product;
-import com.dswjp.muebleria_miley_movil.entity.service.catalog.image.ColorProductImage;
+import com.dswjp.muebleria_miley_movil.entity.catalog.Product;
+import com.dswjp.muebleria_miley_movil.entity.catalog.image.ColorProductImage;
 
 import java.util.ArrayList;
 import java.util.List;
