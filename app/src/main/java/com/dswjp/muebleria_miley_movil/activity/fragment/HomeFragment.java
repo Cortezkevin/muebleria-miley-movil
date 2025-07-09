@@ -22,6 +22,7 @@ import com.dswjp.muebleria_miley_movil.adapter.SliderAdapter;
 import com.dswjp.muebleria_miley_movil.databinding.FragmentHomeBinding;
 import com.dswjp.muebleria_miley_movil.dto.catalog.ProductDTO;
 import com.dswjp.muebleria_miley_movil.entity.SliderItem;
+import com.dswjp.muebleria_miley_movil.utils.GridSpacingItemDecoration;
 import com.dswjp.muebleria_miley_movil.viewmodel.CategoryViewModel;
 import com.dswjp.muebleria_miley_movil.viewmodel.ProductViewModel;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
@@ -67,7 +68,12 @@ public class HomeFragment extends Fragment {
         gvCategories = binding.gvCategorias;
 
         rcvProductsPopular = view.findViewById(R.id.rcvProductPopular);
-        rcvProductsPopular.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        rcvProductsPopular.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_item_spacing);
+        rcvProductsPopular.addItemDecoration(new GridSpacingItemDecoration(2, spacingInPixels, true));
+
+
         productViewModel = vmp.get(ProductViewModel.class);
     }
 
@@ -93,7 +99,7 @@ public class HomeFragment extends Fragment {
             if (response != null && response.getContent() != null) {
                 productAdapter.updateItems(response.getContent());
             } else {
-                productAdapter.updateItems(new ArrayList<>()); // prevención extra
+                productAdapter.updateItems(new ArrayList<>());
             }
         });
     }

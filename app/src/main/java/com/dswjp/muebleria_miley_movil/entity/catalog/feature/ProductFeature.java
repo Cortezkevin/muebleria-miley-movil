@@ -4,7 +4,6 @@ import com.dswjp.muebleria_miley_movil.entity.catalog.Product;
 
 import lombok.*;
 
-@Builder
 @Getter
 @Setter
 @AllArgsConstructor

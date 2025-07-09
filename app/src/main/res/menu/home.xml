@@ -8,9 +8,14 @@
         app:showAsAction="ifRoom">
     </item>
     <item
+        android:id="@+id/cart"
+        android:icon="@drawable/icon_cart"
+        android:title="Carrito"
+        app:showAsAction="ifRoom">
+    </item>
+    <item
         android:id="@+id/more"
         android:icon="@drawable/icon_more"
-        android:iconTint="@color/white"
         android:title="Contáctanos"
         app:showAsAction="always">
         <menu>

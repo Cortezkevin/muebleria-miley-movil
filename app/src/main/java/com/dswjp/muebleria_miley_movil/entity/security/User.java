@@ -9,7 +9,6 @@ import java.util.Set;
 
 import lombok.*;
 
-@Builder
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor

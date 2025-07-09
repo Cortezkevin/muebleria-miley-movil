@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,9 @@ import com.dswjp.muebleria_miley_movil.R;
 import com.dswjp.muebleria_miley_movil.databinding.ActivityRegisterUserBinding;
 import com.dswjp.muebleria_miley_movil.dto.NewUserDTO;
 import com.dswjp.muebleria_miley_movil.viewmodel.AuthViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -72,6 +76,8 @@ public class RegisterUserActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         }, 3000);
+
+
 
                     } else {
                         toastError("no se pudo guardar datos");

@@ -43,7 +43,7 @@ public class ProductRepository {
                     mld.setValue(body);
                 } else {
                     SuccessResponseDTO<List<ProductDTO>> emptyResponse = new SuccessResponseDTO<>();
-                    emptyResponse.setContent(new ArrayList<>()); // evita null
+                    emptyResponse.setContent(new ArrayList<>());
                     mld.setValue(emptyResponse);
                 }
             }

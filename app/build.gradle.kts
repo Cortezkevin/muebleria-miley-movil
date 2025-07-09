@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -83,6 +84,11 @@ dependencies {
     implementation(libs.navigation.ui)
 
     implementation(libs.android.image.slider)
+
+    //firebase
+    implementation(libs.firebase.bom)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.messaging)
 
     compileOnly("org.projectlombok:lombok:1.18.38")
     annotationProcessor("org.projectlombok:lombok:1.18.38")

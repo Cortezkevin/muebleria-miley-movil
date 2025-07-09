@@ -12,6 +12,6 @@ import retrofit2.http.GET;
 public interface CategoryApi {
     String base = "api/category";
 
-    @GET(base)
+    @GET(base + "/public")
     Call<SuccessResponseDTO<List<CategoryDTO>>> findAll();
 }
