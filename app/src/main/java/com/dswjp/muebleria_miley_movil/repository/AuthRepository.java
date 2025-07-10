@@ -11,6 +11,7 @@ import com.dswjp.muebleria_miley_movil.dto.LoginUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.NewUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.security.JwtTokenDTO;
 import com.dswjp.muebleria_miley_movil.commons.SuccessResponseDTO;
+import com.dswjp.muebleria_miley_movil.security.dto.SessionDTO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -33,11 +34,11 @@ public class AuthRepository {
         return authRepository;
     }
 
-    public LiveData<SuccessResponseDTO<JwtTokenDTO>> login(LoginUserDTO loginUserDTO) {
-        final MutableLiveData<SuccessResponseDTO<JwtTokenDTO>> mld = new MutableLiveData<>();
-        this.authApi.login(loginUserDTO).enqueue(new Callback<SuccessResponseDTO<JwtTokenDTO>>() {
+    public LiveData<SuccessResponseDTO<SessionDTO>> login(LoginUserDTO loginUserDTO) {
+        final MutableLiveData<SuccessResponseDTO<SessionDTO>> mld = new MutableLiveData<>();
+        this.authApi.login(loginUserDTO).enqueue(new Callback<SuccessResponseDTO<SessionDTO>>() {
             @Override
-            public void onResponse(Call<SuccessResponseDTO<JwtTokenDTO>> call, Response<SuccessResponseDTO<JwtTokenDTO>> response) {
+            public void onResponse(Call<SuccessResponseDTO<SessionDTO>> call, Response<SuccessResponseDTO<SessionDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     mld.setValue(response.body());
                 } else {
@@ -46,7 +47,7 @@ public class AuthRepository {
             }
 
             @Override
-            public void onFailure(Call<SuccessResponseDTO<JwtTokenDTO>> call, Throwable t) {
+            public void onFailure(Call<SuccessResponseDTO<SessionDTO>> call, Throwable t) {
                 mld.setValue(new SuccessResponseDTO<>());
                 t.printStackTrace();
             }

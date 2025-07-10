@@ -11,6 +11,7 @@ import com.dswjp.muebleria_miley_movil.dto.NewUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.security.JwtTokenDTO;
 import com.dswjp.muebleria_miley_movil.commons.SuccessResponseDTO;
 import com.dswjp.muebleria_miley_movil.repository.AuthRepository;
+import com.dswjp.muebleria_miley_movil.security.dto.SessionDTO;
 
 public class AuthViewModel extends AndroidViewModel {
 
@@ -20,7 +21,7 @@ public class AuthViewModel extends AndroidViewModel {
         this.authRepository = AuthRepository.getInstance();
     }
 
-    public LiveData<SuccessResponseDTO<JwtTokenDTO>> login(LoginUserDTO loginUserDTO) {
+    public LiveData<SuccessResponseDTO<SessionDTO>> login(LoginUserDTO loginUserDTO) {
         return this.authRepository.login(loginUserDTO);
     }
 

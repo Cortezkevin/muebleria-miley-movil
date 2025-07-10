@@ -25,7 +25,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.dswjp.muebleria_miley_movil.R;
 import com.dswjp.muebleria_miley_movil.databinding.ActivityLoginBinding;
 import com.dswjp.muebleria_miley_movil.dto.LoginUserDTO;
-import com.dswjp.muebleria_miley_movil.dto.security.JwtTokenDTO;
+import com.dswjp.muebleria_miley_movil.security.dto.SessionDTO;
 import com.dswjp.muebleria_miley_movil.utils.DateSerializer;
 import com.dswjp.muebleria_miley_movil.utils.TimeSerializer;
 import com.dswjp.muebleria_miley_movil.viewmodel.AuthViewModel;
@@ -73,17 +73,15 @@ public class LoginActivity extends AppCompatActivity {
                     LoginUserDTO loginUserDTO = new LoginUserDTO(email, password);
 
                     authViewModel.login(loginUserDTO).observe(this, response -> {
-
                         if (response.isSuccess()) {
-                            
-                            JwtTokenDTO jwtTokenDTO = response.getContent();
+                            SessionDTO sessionDTO = response.getContent();
                             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
                             SharedPreferences.Editor editor = preferences.edit();
                             final Gson gson = new GsonBuilder()
                                     .registerTypeAdapter(Date.class, new DateSerializer())
                                     .registerTypeAdapter(Time.class, new TimeSerializer())
                                     .create();
-                            editor.putString("jwttokendto", gson.toJson(jwtTokenDTO, new TypeToken<JwtTokenDTO>(){
+                            editor.putString("jwttokendto", gson.toJson(sessionDTO, new TypeToken<SessionDTO>(){
 
                             }.getType()));
                             editor.apply();
@@ -228,5 +226,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
 }

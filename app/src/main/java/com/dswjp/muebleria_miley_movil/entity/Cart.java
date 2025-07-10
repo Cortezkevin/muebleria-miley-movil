@@ -1,6 +1,6 @@
 package com.dswjp.muebleria_miley_movil.entity;
 
-import com.dswjp.muebleria_miley_movil.entity.security.User;
+import com.dswjp.muebleria_miley_movil.security.model.User;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -8,7 +8,6 @@ import java.util.List;
 
 import lombok.*;
 
-@Builder
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
