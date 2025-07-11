@@ -67,7 +67,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                 newUserDTO.setLastName(binding.edtLastName.getText().toString());
                 newUserDTO.setEmail(binding.edtEmailUser.getText().toString());
                 newUserDTO.setPassword(binding.edtPasswordUser.getText().toString());
-                ;
+
                 authViewModel.register(newUserDTO).observe(this, response -> {
                     if (response != null) {
                         toastOk("datos registrados");

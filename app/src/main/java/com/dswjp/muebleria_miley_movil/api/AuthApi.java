@@ -17,5 +17,5 @@ public interface AuthApi {
     Call<SuccessResponseDTO<SessionDTO>> login(@Body LoginUserDTO loginUserDTO);
 
     @POST(base + "/register")
-    Call<SuccessResponseDTO<JwtTokenDTO>> registerUser(@Body NewUserDTO newUserDTO);
+    Call<SuccessResponseDTO<SessionDTO>> registerUser(@Body NewUserDTO newUserDTO);
 }

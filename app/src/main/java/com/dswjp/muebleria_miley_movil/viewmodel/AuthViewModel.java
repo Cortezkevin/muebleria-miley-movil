@@ -25,7 +25,7 @@ public class AuthViewModel extends AndroidViewModel {
         return this.authRepository.login(loginUserDTO);
     }
 
-    public LiveData<SuccessResponseDTO<JwtTokenDTO>> register(NewUserDTO newUserDTO) {
+    public LiveData<SuccessResponseDTO<SessionDTO>> register(NewUserDTO newUserDTO) {
         return this.authRepository.register(newUserDTO);
     }
 }

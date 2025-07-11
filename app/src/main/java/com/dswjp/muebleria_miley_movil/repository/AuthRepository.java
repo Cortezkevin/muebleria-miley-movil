@@ -55,11 +55,11 @@ public class AuthRepository {
         return mld;
     }
 
-    public LiveData<SuccessResponseDTO<JwtTokenDTO>> register(NewUserDTO newUserDTO) {
-      final MutableLiveData<SuccessResponseDTO<JwtTokenDTO>> mld = new MutableLiveData<>();
-      this.authApi.registerUser(newUserDTO).enqueue(new Callback<SuccessResponseDTO<JwtTokenDTO>>() {
+    public LiveData<SuccessResponseDTO<SessionDTO>> register(NewUserDTO newUserDTO) {
+      final MutableLiveData<SuccessResponseDTO<SessionDTO>> mld = new MutableLiveData<>();
+      this.authApi.registerUser(newUserDTO).enqueue(new Callback<SuccessResponseDTO<SessionDTO>>() {
           @Override
-          public void onResponse(Call<SuccessResponseDTO<JwtTokenDTO>> call, Response<SuccessResponseDTO<JwtTokenDTO>> response) {
+          public void onResponse(Call<SuccessResponseDTO<SessionDTO>> call, Response<SuccessResponseDTO<SessionDTO>> response) {
               if (response.isSuccessful() && response.body() != null) {
                   mld.setValue(response.body());
               } else {
@@ -68,7 +68,7 @@ public class AuthRepository {
           }
 
           @Override
-          public void onFailure(Call<SuccessResponseDTO<JwtTokenDTO>> call, Throwable t) {
+          public void onFailure(Call<SuccessResponseDTO<SessionDTO>> call, Throwable t) {
               mld.setValue(new SuccessResponseDTO<>());
               System.out.println(t.getMessage());
               t.printStackTrace();
