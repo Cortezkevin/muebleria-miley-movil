@@ -76,9 +76,6 @@ public class RegisterUserActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         }, 3000);
-
-
-
                     } else {
                         toastError("no se pudo guardar datos");
                     }

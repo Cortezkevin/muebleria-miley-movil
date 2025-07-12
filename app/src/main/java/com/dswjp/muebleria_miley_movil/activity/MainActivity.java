@@ -3,6 +3,7 @@ package com.dswjp.muebleria_miley_movil.activity;
 import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -16,7 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dswjp.muebleria_miley_movil.R;
+import com.dswjp.muebleria_miley_movil.api.ConfigApi;
 import com.dswjp.muebleria_miley_movil.databinding.ActivityMainBinding;
+import com.dswjp.muebleria_miley_movil.utils.helpers.SharedPreferencesHelpers;
+import com.dswjp.muebleria_miley_movil.viewmodel.AuthViewModel;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,6 +30,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private AuthViewModel authViewModel;
 
     private final ActivityResultLauncher<String> notificationPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -49,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initViewModel();
+
+        SharedPreferencesHelpers.getToken(getApplicationContext())
+                .ifPresent(ConfigApi::setToken);
+
         GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -57,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.appBarHome.toolbar);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
         NavigationUI.setupWithNavController(binding.appBarHome.bottomNavigation, navController);
-
         /*
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
@@ -83,8 +93,11 @@ public class MainActivity extends AppCompatActivity {
 
         requestNotificationPermission();
     }
+
+    private void initViewModel() {
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+    }
     private void requestNotificationPermission() {
-        // This is only necessary for API level >= 33 (TIRAMISU)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
                     PackageManager.PERMISSION_GRANTED) {
@@ -107,6 +120,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                     String token = task.getResult();
                     Log.d("FCM", "Token del dispositivo: " + token);
+
+                    SharedPreferencesHelpers.getUserId(getApplicationContext())
+                            .ifPresent(userId -> {
+                                // TODO: Guardando el token del dispositivo en la base de datos
+                                authViewModel.saveDeviceToken(userId, token).observe(this, response -> {
+                                    Log.d("FCM",response.toString());
+                                });
+                            });
                 });
     }
 
@@ -122,7 +143,8 @@ public class MainActivity extends AppCompatActivity {
     private void logout() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.remove("jwttokendto");
+        editor.remove("token");
+        editor.remove("user-id");
         editor.apply();
         this.finish();
         this.overridePendingTransition(R.anim.left_in, R.anim.left_out);

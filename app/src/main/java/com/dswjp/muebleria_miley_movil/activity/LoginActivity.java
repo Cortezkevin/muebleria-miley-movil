@@ -23,11 +23,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.dswjp.muebleria_miley_movil.R;
+import com.dswjp.muebleria_miley_movil.api.ConfigApi;
 import com.dswjp.muebleria_miley_movil.databinding.ActivityLoginBinding;
 import com.dswjp.muebleria_miley_movil.dto.LoginUserDTO;
 import com.dswjp.muebleria_miley_movil.security.dto.SessionDTO;
 import com.dswjp.muebleria_miley_movil.utils.DateSerializer;
 import com.dswjp.muebleria_miley_movil.utils.TimeSerializer;
+import com.dswjp.muebleria_miley_movil.utils.helpers.SharedPreferencesHelpers;
 import com.dswjp.muebleria_miley_movil.viewmodel.AuthViewModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -73,26 +75,22 @@ public class LoginActivity extends AppCompatActivity {
                     LoginUserDTO loginUserDTO = new LoginUserDTO(email, password);
 
                     authViewModel.login(loginUserDTO).observe(this, response -> {
-                        Log.d("LOGIN_ACTIVITY","Calling method login: " + email + " " + password);
-                        Log.d("LOGIN_ACTIVITY","Response: "+ response.getMessage().toString());
                         if (response.isSuccess()) {
-                            Log.d("LOGIN_ACTIVITY","Response: "+ response.getMessage().toString());
                             SessionDTO sessionDTO = response.getContent();
-                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-                            SharedPreferences.Editor editor = preferences.edit();
+
+                            ConfigApi.setToken(sessionDTO.getToken());
+
                             final Gson gson = new GsonBuilder()
                                     .registerTypeAdapter(Date.class, new DateSerializer())
                                     .registerTypeAdapter(Time.class, new TimeSerializer())
                                     .create();
-                            editor.putString("jwttokendto", gson.toJson(sessionDTO, new TypeToken<SessionDTO>(){
 
-                            }.getType()));
-                            editor.apply();
+                            SharedPreferencesHelpers.saveToken(this, sessionDTO.getToken());
+                            SharedPreferencesHelpers.saveUserId(this, sessionDTO.getId());
                             binding.edtMail.setText("");
                             binding.edtPassword.setText("");
                             startActivity(new Intent(this, MainActivity.class));
                         } else {
-
                             toastError("credenciales invalidas");
                         }
                     });

@@ -28,4 +28,8 @@ public class AuthViewModel extends AndroidViewModel {
     public LiveData<SuccessResponseDTO<SessionDTO>> register(NewUserDTO newUserDTO) {
         return this.authRepository.register(newUserDTO);
     }
+
+    public LiveData<SuccessResponseDTO<String>> saveDeviceToken(String userId, String token) {
+        return this.authRepository.saveDeviceToken(userId, token);
+    }
 }

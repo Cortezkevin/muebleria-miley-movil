@@ -5,6 +5,9 @@ import com.dswjp.muebleria_miley_movil.security.model.User;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.Data;
+
+@Data
 public class SessionDTO {
     String token;
     String id;

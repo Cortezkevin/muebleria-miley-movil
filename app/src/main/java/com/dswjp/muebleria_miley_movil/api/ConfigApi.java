@@ -1,5 +1,8 @@
 package com.dswjp.muebleria_miley_movil.api;
 
+import android.content.SharedPreferences;
+import android.util.Log;
+
 import com.dswjp.muebleria_miley_movil.utils.DateSerializer;
 import com.dswjp.muebleria_miley_movil.utils.TimeSerializer;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -11,6 +14,7 @@ import java.sql.Time;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -23,7 +27,7 @@ public class ConfigApi {
     "http://10.250.240.11:4000" */
 
     public static final String baseUrlE = "http://10.250.240.11:4000";
-    private static Retrofit  retrofit;
+    private static Retrofit retrofit;
     private static String token = "";
     private static AuthApi authApi;
     private static CategoryApi categoryApi;
@@ -46,6 +50,7 @@ public class ConfigApi {
     }
 
     public static OkHttpClient getClient() {
+        Log.d("ConfigApi","Getting client");
         HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
         loggin.level(HttpLoggingInterceptor.Level.BODY);
 
@@ -57,6 +62,19 @@ public class ConfigApi {
                 .readTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .addNetworkInterceptor(stetho);
+        if ( token != null && !token.isEmpty() ) {
+            Log.d("ConfigApi","Adding Interceptor Token: " + token);
+            builder.addInterceptor( chain -> {
+                Request original = chain.request();
+                Request request = original.newBuilder()
+                        .header("Authorization", "Bearer " + token)
+                        .build();
+                return chain.proceed(request);
+            });
+        }else {
+            Log.d("ConfigApi","Not Token");
+        }
+
         return builder.build();
     }
 

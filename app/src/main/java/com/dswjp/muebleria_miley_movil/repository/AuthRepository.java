@@ -76,4 +76,28 @@ public class AuthRepository {
       });
       return mld;
     };
+
+    public LiveData<SuccessResponseDTO<String>> saveDeviceToken(String userId, String token) {
+        Log.d("AuthRepository","Calling method saveDeviceToken " + token);
+        final MutableLiveData<SuccessResponseDTO<String>> mld = new MutableLiveData<>();
+        this.authApi.saveDeviceToken(userId, token).enqueue(new Callback<SuccessResponseDTO<String>>() {
+            @Override
+            public void onResponse(Call<SuccessResponseDTO<String>> call, Response<SuccessResponseDTO<String>> response) {
+                Log.d("AuthRepository", response.toString());
+                if (response.isSuccessful() && response.body() != null) {
+                    mld.setValue(response.body());
+                } else {
+                    mld.setValue(new SuccessResponseDTO<>());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SuccessResponseDTO<String>> call, Throwable t) {
+                mld.setValue(new SuccessResponseDTO<>());
+                Log.e("AuthRepository", t.getMessage());
+                t.printStackTrace();
+            }
+        });
+        return mld;
+    };
 }
