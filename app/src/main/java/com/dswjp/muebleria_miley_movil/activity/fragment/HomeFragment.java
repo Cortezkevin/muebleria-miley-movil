@@ -85,22 +85,19 @@ public class HomeFragment extends Fragment {
         lista.add(new SliderItem(R.drawable.photocarrusel4, "carusel 4"));
         sliderAdapter.updateItem(lista);
 
-        categoryViewModel.listCategories().observe(getViewLifecycleOwner(), response -> {
-            if (response != null) {
+        categoryViewModel.getCategories().observe(getViewLifecycleOwner(), response -> {
+            categoryAdapter.addAll(response);
+            /*if (response != null) {
                 categoryAdapter.clear();
                 categoryAdapter.addAll(response.getContent());
                 categoryAdapter.notifyDataSetChanged();
             } else {
                 System.out.println("error al obtener las categorias activas");
-            }
+            }*/
         });
 
-        productViewModel.listProducts().observe(getViewLifecycleOwner(), response -> {
-            if (response != null && response.getContent() != null) {
-                productAdapter.updateItems(response.getContent());
-            } else {
-                productAdapter.updateItems(new ArrayList<>());
-            }
+        productViewModel.getProducts().observe(getViewLifecycleOwner(), response -> {
+            productAdapter.updateItems(response);
         });
     }
 

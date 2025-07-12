@@ -17,5 +17,6 @@ public class SubCategory {
     private String description;
     private String url_image;
     private Category category;
+    @Builder.Default
     private List<Product> productList = new ArrayList<>();
 }

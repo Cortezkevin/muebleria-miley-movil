@@ -73,7 +73,10 @@ public class LoginActivity extends AppCompatActivity {
                     LoginUserDTO loginUserDTO = new LoginUserDTO(email, password);
 
                     authViewModel.login(loginUserDTO).observe(this, response -> {
+                        Log.d("LOGIN_ACTIVITY","Calling method login: " + email + " " + password);
+                        Log.d("LOGIN_ACTIVITY","Response: "+ response.getMessage().toString());
                         if (response.isSuccess()) {
+                            Log.d("LOGIN_ACTIVITY","Response: "+ response.getMessage().toString());
                             SessionDTO sessionDTO = response.getContent();
                             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
                             SharedPreferences.Editor editor = preferences.edit();
@@ -89,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                             binding.edtPassword.setText("");
                             startActivity(new Intent(this, MainActivity.class));
                         } else {
+
                             toastError("credenciales invalidas");
                         }
                     });

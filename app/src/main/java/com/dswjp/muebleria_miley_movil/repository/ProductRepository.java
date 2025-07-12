@@ -1,5 +1,7 @@
 package com.dswjp.muebleria_miley_movil.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -33,6 +35,7 @@ public class ProductRepository {
     }
 
     public LiveData<SuccessResponseDTO<List<ProductDTO>>> listProducts() {
+        Log.d("ProductRepository","Calling method listProducts()");
         final MutableLiveData<SuccessResponseDTO<List<ProductDTO>>> mld = new MutableLiveData<>();
         this.productApi.getAll().enqueue(new Callback<SuccessResponseDTO<List<ProductDTO>>>() {
             @Override
