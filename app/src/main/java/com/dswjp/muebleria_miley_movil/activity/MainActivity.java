@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import com.dswjp.muebleria_miley_movil.R;
 import com.dswjp.muebleria_miley_movil.databinding.ActivityMainBinding;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -81,17 +83,18 @@ public class MainActivity extends AppCompatActivity {
 
         requestNotificationPermission();
     }
-
     private void requestNotificationPermission() {
+        // This is only necessary for API level >= 33 (TIRAMISU)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
-                    != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                    PackageManager.PERMISSION_GRANTED) {
+                getDeviceToken();
+            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                // TODO: CUADRO DE DIALOGO EXPLICANDO IMPORTANCIA DEL PERMISO Y BOTONES DE ACEPTAR O DENEGAR
                 notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
             } else {
-                getDeviceToken();
+                notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
             }
-        } else {
-            getDeviceToken();
         }
     }
 
@@ -102,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("FCM", "Error al obtener token", task.getException());
                         return;
                     }
-
                     String token = task.getResult();
                     Log.d("FCM", "Token del dispositivo: " + token);
                 });
@@ -141,5 +143,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
     }
 }
