@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -17,13 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dswjp.muebleria_miley_movil.R;
+import com.dswjp.muebleria_miley_movil.activity.fragment.CartFragment;
 import com.dswjp.muebleria_miley_movil.api.ConfigApi;
 import com.dswjp.muebleria_miley_movil.databinding.ActivityMainBinding;
 import com.dswjp.muebleria_miley_movil.utils.helpers.SharedPreferencesHelpers;
 import com.dswjp.muebleria_miley_movil.viewmodel.AuthViewModel;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -138,8 +138,14 @@ public class MainActivity extends AppCompatActivity {
             this.logout();
             return true;
         }
+        if (item.getItemId() == R.id.notification) {
+            startActivity(new Intent(this, NotificationActivity.class));
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
+
     private void logout() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();

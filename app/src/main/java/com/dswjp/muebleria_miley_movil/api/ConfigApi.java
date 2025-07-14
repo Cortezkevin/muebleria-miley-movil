@@ -24,15 +24,17 @@ public class ConfigApi {
     /*
     ip en universidad
     public static final String baseUrlE =
-    "http://10.250.240.11:4000" */
+    "http://10.250.240.11:4000"
+    "http://192.168.1.7:4000" */
 
-    public static final String baseUrlE = "http://192.168.1.7:4000";
+    public static final String baseUrlE = "http://192.168.18.10:4000" ;
     private static Retrofit retrofit;
     private static String token = "";
     private static AuthApi authApi;
     private static CategoryApi categoryApi;
     private static ProductApi productApi;
     private static OrderApi orderApi;
+    private static NotificationApi notificationApi;
 
     static {
         initClient();
@@ -110,6 +112,13 @@ public class ConfigApi {
             productApi = retrofit.create(ProductApi.class);
         }
         return productApi;
+    }
+
+    public static NotificationApi getNotificationApi() {
+        if (notificationApi == null) {
+            notificationApi = retrofit.create(NotificationApi.class);
+        }
+        return notificationApi;
     }
 
 }

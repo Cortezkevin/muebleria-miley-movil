@@ -11,7 +11,6 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
@@ -27,6 +26,9 @@
         android:theme="@style/Theme.Muebleriamileymovil"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.NotificationActivity"
+            android:exported="false" />
 
         <service
             android:name=".MyFirebaseMessagingService"
@@ -49,8 +51,7 @@
             android:name=".activity.MainActivity"
             android:exported="false"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.Muebleriamileymovil.NoActionBar" >
-        </activity>
+            android:theme="@style/Theme.Muebleriamileymovil.NoActionBar"></activity>
         <activity
             android:name=".activity.SplashActivity"
             android:exported="true">
