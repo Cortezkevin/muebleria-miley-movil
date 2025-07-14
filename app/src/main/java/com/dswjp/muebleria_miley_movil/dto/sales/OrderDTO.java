@@ -8,16 +8,19 @@ import com.dswjp.muebleria_miley_movil.sales.enums.ShippingStatus;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import lombok.Data;
+
+@Data
 public class OrderDTO {
-    String id;
-    BigDecimal total;
-    String user;
-    String shippingAddress;
-    Timestamp createdDate;
-    Timestamp cancelledDate;
-    Timestamp completedDate;
-    PaymentMethod paymentMethod;
-    PreparationStatus preparationStatus;
-    ShippingStatus shippingStatus;
-    OrderStatus status;
+    private String id;
+    private BigDecimal total;
+    private String user;
+    private String shippingAddress;
+    private Timestamp createdDate;
+    private Timestamp cancelledDate;
+    private Timestamp completedDate;
+    private PaymentMethod paymentMethod;
+    private PreparationStatus preparationStatus;
+    private ShippingStatus shippingStatus;
+    private OrderStatus status;
 }

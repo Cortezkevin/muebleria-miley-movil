@@ -147,11 +147,15 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String pref = preferences.getString("jwttokendto", "");
-        if (!pref.equals("")) {
-            toastOk("se detecto una sesión activa, el login será omitido");
-            this.startActivity(new Intent(this, MainActivity.class));
-            this.overridePendingTransition(R.anim.left_in, R.anim.left_out);
+        String token = preferences.getString("token", null);
+        if ( token != null ) {
+            authViewModel.validateSession().observe(this, response -> {
+                if(response.isSuccess()){
+                    toastOk("se detecto una sesión activa, el login será omitido");
+                    this.startActivity(new Intent(this, MainActivity.class));
+                    this.overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                }
+            });
         }
     }
 

@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.dswjp.muebleria_miley_movil.api.ConfigApi;
 import com.dswjp.muebleria_miley_movil.databinding.ActivitySplashBinding;
+import com.dswjp.muebleria_miley_movil.utils.helpers.SharedPreferencesHelpers;
 
 public class SplashActivity extends AppCompatActivity {
     private ActivitySplashBinding binding;
@@ -13,6 +16,9 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferencesHelpers.getToken(getApplicationContext())
+                .ifPresent(ConfigApi::setToken);
+
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

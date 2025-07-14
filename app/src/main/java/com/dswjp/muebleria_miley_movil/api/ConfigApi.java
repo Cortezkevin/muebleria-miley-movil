@@ -26,12 +26,13 @@ public class ConfigApi {
     public static final String baseUrlE =
     "http://10.250.240.11:4000" */
 
-    public static final String baseUrlE = "http://10.250.240.11:4000";
+    public static final String baseUrlE = "http://192.168.1.7:4000";
     private static Retrofit retrofit;
     private static String token = "";
     private static AuthApi authApi;
     private static CategoryApi categoryApi;
     private static ProductApi productApi;
+    private static OrderApi orderApi;
 
     static {
         initClient();
@@ -50,30 +51,30 @@ public class ConfigApi {
     }
 
     public static OkHttpClient getClient() {
-        Log.d("ConfigApi","Getting client");
-        HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
-        loggin.level(HttpLoggingInterceptor.Level.BODY);
-
-        StethoInterceptor stetho = new StethoInterceptor();
+        Log.d("ConfigApi", "Getting client");
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-        builder.addInterceptor(loggin)
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .addNetworkInterceptor(stetho);
-        if ( token != null && !token.isEmpty() ) {
-            Log.d("ConfigApi","Adding Interceptor Token: " + token);
-            builder.addInterceptor( chain -> {
+        if (token != null && !token.isEmpty()) {
+            Log.d("ConfigApi", "Adding Authorization header");
+            builder.addInterceptor(chain -> {
                 Request original = chain.request();
                 Request request = original.newBuilder()
                         .header("Authorization", "Bearer " + token)
                         .build();
                 return chain.proceed(request);
             });
-        }else {
-            Log.d("ConfigApi","Not Token");
+        } else {
+            Log.d("ConfigApi", "No token found");
         }
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        builder.addInterceptor(logging);
+
+        builder.connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .addNetworkInterceptor(new StethoInterceptor());
 
         return builder.build();
     }
@@ -88,6 +89,13 @@ public class ConfigApi {
             authApi = retrofit.create(AuthApi.class);
         }
         return authApi;
+    }
+
+    public static OrderApi getOrderApi() {
+        if (orderApi == null) {
+            orderApi = retrofit.create(OrderApi.class);
+        }
+        return orderApi;
     }
 
     public static CategoryApi getCategoryApi() {

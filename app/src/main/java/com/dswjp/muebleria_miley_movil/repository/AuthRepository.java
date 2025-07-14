@@ -11,6 +11,7 @@ import com.dswjp.muebleria_miley_movil.dto.LoginUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.NewUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.security.JwtTokenDTO;
 import com.dswjp.muebleria_miley_movil.commons.SuccessResponseDTO;
+import com.dswjp.muebleria_miley_movil.dto.security.UserDTO;
 import com.dswjp.muebleria_miley_movil.security.dto.SessionDTO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -100,4 +101,28 @@ public class AuthRepository {
         });
         return mld;
     };
+
+    public LiveData<SuccessResponseDTO<UserDTO>> validateSession() {
+        Log.d("AuthRepository","Calling method validateSession");
+        final MutableLiveData<SuccessResponseDTO<UserDTO>> mld = new MutableLiveData<>();
+        this.authApi.validateToken().enqueue(new Callback<SuccessResponseDTO<UserDTO>>() {
+            @Override
+            public void onResponse(Call<SuccessResponseDTO<UserDTO>> call, Response<SuccessResponseDTO<UserDTO>> response) {
+                Log.d("AuthRepository", response.toString());
+                if (response.isSuccessful() && response.body() != null) {
+                    mld.setValue(response.body());
+                } else {
+                    mld.setValue(new SuccessResponseDTO<>());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SuccessResponseDTO<UserDTO>> call, Throwable t) {
+                mld.setValue(new SuccessResponseDTO<>());
+                Log.e("AuthRepository", t.getMessage());
+                t.printStackTrace();
+            }
+        });
+        return mld;
+    }
 }

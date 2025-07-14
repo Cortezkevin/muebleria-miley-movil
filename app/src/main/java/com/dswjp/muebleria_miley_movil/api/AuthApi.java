@@ -4,10 +4,12 @@ import com.dswjp.muebleria_miley_movil.dto.LoginUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.NewUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.security.JwtTokenDTO;
 import com.dswjp.muebleria_miley_movil.commons.SuccessResponseDTO;
+import com.dswjp.muebleria_miley_movil.dto.security.UserDTO;
 import com.dswjp.muebleria_miley_movil.security.dto.SessionDTO;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -22,9 +24,12 @@ public interface AuthApi {
     @POST(base + "/register")
     Call<SuccessResponseDTO<SessionDTO>> registerUser(@Body NewUserDTO newUserDTO);
 
-    @PUT(base + "/device-token/{userId}")
+    @PUT(base + "/device-token/mobile/{userId}")
     Call<SuccessResponseDTO<String>> saveDeviceToken(
             @Path("userId") String userId,
             @Query("token") String deviceToken
     );
+
+    @GET(base + "/getUserFromToken")
+    Call<SuccessResponseDTO<UserDTO>> validateToken();
 }
