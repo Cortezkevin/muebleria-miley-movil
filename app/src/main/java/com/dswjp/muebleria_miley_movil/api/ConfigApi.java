@@ -36,6 +36,8 @@ public class ConfigApi {
     private static ProfileApi profileApi;
     private static AddressApi addressApi;
 
+    private static NotificationApi notificationApi;
+
     static {
         initClient();
     }
@@ -126,5 +128,12 @@ public class ConfigApi {
             addressApi = retrofit.create(AddressApi.class);
         }
         return addressApi;
+    }
+
+    public static NotificationApi getNotificationApi() {
+        if (notificationApi == null) {
+            notificationApi = retrofit.create(NotificationApi.class);
+        }
+        return notificationApi;
     }
 }
