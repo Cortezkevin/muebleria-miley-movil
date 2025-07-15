@@ -16,6 +16,7 @@ import com.dswjp.muebleria_miley_movil.adapter.OrderAdapter;
 import com.dswjp.muebleria_miley_movil.adapter.ProductPopularAdapter;
 import com.dswjp.muebleria_miley_movil.databinding.FragmentFavoriteBinding;
 import com.dswjp.muebleria_miley_movil.databinding.FragmentHomeBinding;
+import com.dswjp.muebleria_miley_movil.dto.sales.OrderDTO;
 import com.dswjp.muebleria_miley_movil.utils.GridSpacingItemDecoration;
 import com.dswjp.muebleria_miley_movil.utils.helpers.SharedPreferencesHelpers;
 import com.dswjp.muebleria_miley_movil.viewmodel.AuthViewModel;
@@ -23,6 +24,7 @@ import com.dswjp.muebleria_miley_movil.viewmodel.OrderViewModel;
 import com.dswjp.muebleria_miley_movil.viewmodel.ProductViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FavoriteFragment extends Fragment {
 
@@ -42,7 +44,9 @@ public class FavoriteFragment extends Fragment {
         SharedPreferencesHelpers.getUserId(this.getContext())
                 .ifPresent(userId -> {
                     orderViewModel.getAllByUser(userId).observe(this.getViewLifecycleOwner(), response -> {
-                        orderAdapter.updateItems(response.getContent());
+                        List<OrderDTO> orders = response.getContent();
+                        orderAdapter.updateItems(orders);
+                        binding.txtEmptyOrders.setVisibility(orders.isEmpty() ? View.VISIBLE : View.GONE);
                     });
                 });
 

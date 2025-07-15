@@ -33,6 +33,8 @@ public class ConfigApi {
     private static CategoryApi categoryApi;
     private static ProductApi productApi;
     private static OrderApi orderApi;
+    private static ProfileApi profileApi;
+    private static AddressApi addressApi;
 
     static {
         initClient();
@@ -112,4 +114,17 @@ public class ConfigApi {
         return productApi;
     }
 
+    public static ProfileApi getProfileApi() {
+        if (profileApi == null) {
+            profileApi = retrofit.create(ProfileApi.class);
+        }
+        return profileApi;
+    }
+
+    public static AddressApi getAddressApi() {
+        if (addressApi == null) {
+            addressApi = retrofit.create(AddressApi.class);
+        }
+        return addressApi;
+    }
 }

@@ -30,8 +30,8 @@
     <string name="text_toast_error">error, mensaje de toast</string>
 
     <string name="text_search">buscar cualquier cosa</string>
-    <string name="text_subtitle1">explore popular categories</string>
-    <string name="text_subtitle2">popular product</string>
+    <string name="text_subtitle1">Nuestras Categorias</string>
+    <string name="text_subtitle2">Nuestros Productos</string>
     <string name="text_subtitle3">ver todos</string>
 
     <string name="image_register">Subir imagen para tu perfil</string>

@@ -10,21 +10,26 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import com.dswjp.muebleria_miley_movil.App;
 import com.dswjp.muebleria_miley_movil.R;
 import com.dswjp.muebleria_miley_movil.adapter.CategoryAdapter;
 import com.dswjp.muebleria_miley_movil.adapter.ProductPopularAdapter;
 import com.dswjp.muebleria_miley_movil.adapter.SliderAdapter;
+import com.dswjp.muebleria_miley_movil.context.SessionManager.SessionManager;
 import com.dswjp.muebleria_miley_movil.databinding.FragmentHomeBinding;
 import com.dswjp.muebleria_miley_movil.dto.catalog.ProductDTO;
 import com.dswjp.muebleria_miley_movil.entity.SliderItem;
 import com.dswjp.muebleria_miley_movil.utils.GridSpacingItemDecoration;
+import com.dswjp.muebleria_miley_movil.utils.helpers.SharedPreferencesHelpers;
 import com.dswjp.muebleria_miley_movil.viewmodel.CategoryViewModel;
 import com.dswjp.muebleria_miley_movil.viewmodel.ProductViewModel;
+import com.dswjp.muebleria_miley_movil.viewmodel.ProfileViewModel;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -41,13 +46,17 @@ public class HomeFragment extends Fragment {
     private SliderAdapter sliderAdapter;
     private SliderView svCarrusel;
     private ProductViewModel productViewModel;
+    private ProfileViewModel profileViewModel;
     private RecyclerView rcvProductsPopular;
     private ProductPopularAdapter productAdapter;
     private List<ProductDTO> productsPopular = new ArrayList<>();
+    private SessionManager sessionManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        sessionManager = SessionManager.getInstance();//((App) this.getContext().getApplicationContext()).getSessionManager();
+        Log.d("HomeFragment","Session Manager :"+ sessionManager.toString());
         return binding.getRoot();
     }
 
@@ -61,6 +70,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void init(View view) {
+        sessionManager.getPersonalData().observe(getViewLifecycleOwner(), personalData -> {
+            binding.txtHomeEmail.setText(personalData.getFullName());
+        });
+
         svCarrusel = binding.svCarrusel;
         ViewModelProvider vmp = new ViewModelProvider(this);
 
@@ -75,6 +88,7 @@ public class HomeFragment extends Fragment {
 
 
         productViewModel = vmp.get(ProductViewModel.class);
+        profileViewModel = vmp.get(ProfileViewModel.class);
     }
 
     private void loadData() {
@@ -87,13 +101,6 @@ public class HomeFragment extends Fragment {
 
         categoryViewModel.getCategories().observe(getViewLifecycleOwner(), response -> {
             categoryAdapter.addAll(response);
-            /*if (response != null) {
-                categoryAdapter.clear();
-                categoryAdapter.addAll(response.getContent());
-                categoryAdapter.notifyDataSetChanged();
-            } else {
-                System.out.println("error al obtener las categorias activas");
-            }*/
         });
 
         productViewModel.getProducts().observe(getViewLifecycleOwner(), response -> {
