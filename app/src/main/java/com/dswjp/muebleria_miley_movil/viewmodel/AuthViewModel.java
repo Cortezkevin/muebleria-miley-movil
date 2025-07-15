@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.dswjp.muebleria_miley_movil.dto.LoginUserDTO;
 import com.dswjp.muebleria_miley_movil.dto.NewUserDTO;
@@ -17,6 +18,7 @@ import com.dswjp.muebleria_miley_movil.security.dto.SessionDTO;
 public class AuthViewModel extends AndroidViewModel {
 
     private final AuthRepository authRepository;
+
     public AuthViewModel(@NonNull Application application) {
         super(application);
         this.authRepository = AuthRepository.getInstance();

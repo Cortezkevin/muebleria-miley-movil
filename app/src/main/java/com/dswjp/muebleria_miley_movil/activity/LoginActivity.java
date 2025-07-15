@@ -22,8 +22,10 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.dswjp.muebleria_miley_movil.App;
 import com.dswjp.muebleria_miley_movil.R;
 import com.dswjp.muebleria_miley_movil.api.ConfigApi;
+import com.dswjp.muebleria_miley_movil.context.SessionManager.SessionManager;
 import com.dswjp.muebleria_miley_movil.databinding.ActivityLoginBinding;
 import com.dswjp.muebleria_miley_movil.dto.LoginUserDTO;
 import com.dswjp.muebleria_miley_movil.security.dto.SessionDTO;
@@ -88,6 +90,9 @@ public class LoginActivity extends AppCompatActivity {
 
                             SharedPreferencesHelpers.saveToken(this, sessionDTO.getToken());
                             SharedPreferencesHelpers.saveUserId(this, sessionDTO.getId());
+                            SharedPreferencesHelpers.saveEmail(this, sessionDTO.getEmail());
+                            SharedPreferencesHelpers.saveRoles(this, sessionDTO.getRoles());
+
                             binding.edtMail.setText("");
                             binding.edtPassword.setText("");
                             startActivity(new Intent(this, MainActivity.class));
@@ -147,9 +152,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String token = preferences.getString("token", null);
-        if ( token != null ) {
+        App app = (App) this.getApplicationContext();
+        SessionManager sessionManager = app.getSessionManager();
+        if(sessionManager.isLogged()){
+            toastOk("se detecto una sesión activa, el login será omitido");
+            this.startActivity(new Intent(this, MainActivity.class));
+            this.overridePendingTransition(R.anim.left_in, R.anim.left_out);
+        }
+        /*SharedPreferencesHelpers.getToken(this).ifPresent(token -> {
             authViewModel.validateSession().observe(this, response -> {
                 if(response.isSuccess()){
                     toastOk("se detecto una sesión activa, el login será omitido");
@@ -157,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                     this.overridePendingTransition(R.anim.left_in, R.anim.left_out);
                 }
             });
-        }
+        });*/
     }
 
     private void toastOk(String message) {

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -16,20 +15,29 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
+import com.dswjp.muebleria_miley_movil.App;
 import com.dswjp.muebleria_miley_movil.R;
-import com.dswjp.muebleria_miley_movil.activity.fragment.CartFragment;
 import com.dswjp.muebleria_miley_movil.api.ConfigApi;
+import com.dswjp.muebleria_miley_movil.context.SessionManager.SessionManager;
 import com.dswjp.muebleria_miley_movil.databinding.ActivityMainBinding;
+import com.dswjp.muebleria_miley_movil.enums.AccessType;
 import com.dswjp.muebleria_miley_movil.utils.helpers.SharedPreferencesHelpers;
 import com.dswjp.muebleria_miley_movil.viewmodel.AuthViewModel;
+import com.dswjp.muebleria_miley_movil.viewmodel.ProfileViewModel;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -37,11 +45,16 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private AuthViewModel authViewModel;
+    private ProfileViewModel profileViewModel;
+    private SessionManager sessionManager;
+
 
     private final ActivityResultLauncher<String> notificationPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -57,8 +70,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initViewModel();
 
-        SharedPreferencesHelpers.getToken(getApplicationContext())
-                .ifPresent(ConfigApi::setToken);
+        /*SharedPreferencesHelpers.getToken(getApplicationContext())
+                .ifPresent(ConfigApi::setToken);*/
+        sessionManager = SessionManager.getInstance();
+
 
         GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
 
@@ -68,17 +83,21 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.appBarHome.toolbar);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
         NavigationUI.setupWithNavController(binding.appBarHome.bottomNavigation, navController);
-        /*
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
-                .setOpenableLayout(drawer)
-                .build();
-        //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
-        //NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);*/
+
+        SessionManager sessionManager = ((App) this.getApplicationContext()).getSessionManager();
+
+        if(sessionManager.isAdmin() || !Objects.equals(sessionManager.getAccessType(), AccessType.CLIENT)){
+            DrawerLayout drawer = binding.drawerLayout;
+            NavigationView navigationView = binding.navView;
+            // Passing each menu ID as a set of Ids because each
+            // menu should be considered as top level destinations.
+            mAppBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                    .setOpenableLayout(drawer)
+                    .build();
+            //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
+            NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        }
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -92,10 +111,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
         requestNotificationPermission();
+        loadProfileData();
     }
 
     private void initViewModel() {
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+    }
+
+    private void loadProfileData(){
+        profileViewModel.getPersonalData().observe(this, response -> {
+            sessionManager.loadPersonalData(response);
+            View navHeader = binding.navView.getHeaderView(0);
+            TextView txtNavUserFullName = navHeader.findViewById(R.id.txtNavUserFullName);
+            TextView txtNavUserEmail = navHeader.findViewById(R.id.txtNavUserEmail);
+            txtNavUserEmail.setText(sessionManager.getEmail());
+            txtNavUserFullName.setText(response.getFullName());
+        });
+
+        profileViewModel.getAddress().observe(this, resposne -> {
+            sessionManager.loadAddress(resposne);
+        });
     }
     private void requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -138,20 +174,13 @@ public class MainActivity extends AppCompatActivity {
             this.logout();
             return true;
         }
-        if (item.getItemId() == R.id.notification) {
-            startActivity(new Intent(this, NotificationActivity.class));
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
-
     private void logout() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.remove("token");
-        editor.remove("user-id");
-        editor.apply();
+        SharedPreferencesHelpers.removeToken(this);
+        SharedPreferencesHelpers.removeUserId(this);
+        SharedPreferencesHelpers.removeEmail(this);
+        SharedPreferencesHelpers.removeRoles(this);
         this.finish();
         this.overridePendingTransition(R.anim.left_in, R.anim.left_out);
     }
