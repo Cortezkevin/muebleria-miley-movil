@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#2e2e2e"
+                app:navigationIcon="@drawable/ic_back"
+                app:title="Detalle de Orden #..."
+                app:titleTextColor="@color/white" />
+        </com.google.android.material.appbar.AppBarLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="#2e2e2e">
+
+        <LinearLayout
+            android:id="@+id/contentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Fecha -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha Creación"
+                style="@style/OrderLabel" />
+
+
+            <TextView
+                android:id="@+id/orderCreatedDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/OrderValue" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha Orden Completada"
+                style="@style/OrderLabel" />
+
+
+            <TextView
+                android:id="@+id/orderCompletedDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/OrderValue" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#444444"
+                android:layout_marginVertical="16dp" />
+
+            <!-- Número de pedido -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Número de pedido"
+                style="@style/OrderLabel" />
+            <TextView
+                android:id="@+id/orderId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/OrderValue" />
+
+            <!-- ID de la factura -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID de la factura"
+                style="@style/OrderLabel" />
+            <TextView
+                android:id="@+id/invoiceId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/OrderValue" />
+
+            <!-- Metodo de pago -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Método de pago"
+                style="@style/OrderLabel" />
+            <TextView
+                android:id="@+id/paymentMethod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/OrderValue" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#444444"
+                android:layout_marginVertical="16dp" />
+
+            <!-- Dirección -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dirección"
+                style="@style/OrderLabel" />
+            <TextView
+                android:id="@+id/shippingAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/OrderValue" />
+
+            <!-- Botón para ver ubicación -->
+            <Button
+                android:id="@+id/btnMap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ver en el mapa"
+                android:layout_marginTop="8dp"
+                android:textColor="#000000"
+                android:backgroundTint="#A5FFAB" />
+
+            <!-- Línea divisoria -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#444444"
+                android:layout_marginVertical="16dp" />
+
+            <!-- Artículos -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Artículos"
+                style="@style/OrderLabel" />
+            <LinearLayout
+                android:id="@+id/orderItemsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="8dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerOrderDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    tools:listitem="@layout/item_order_detail"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#444444"
+                android:layout_marginVertical="16dp" />
+
+            <!-- Impuestos -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Impuestos totales"
+                style="@style/OrderLabel" />
+            <TextView
+                android:id="@+id/tax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/OrderValue" />
+
+            <!-- Total -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                style="@style/OrderLabel"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/OrderValue"
+                android:textStyle="bold"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#444444"
+                android:layout_marginVertical="16dp" />
+
+            <!-- Botón descargar -->
+            <Button
+                android:id="@+id/btnDownload"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Descargar"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#1DB954"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

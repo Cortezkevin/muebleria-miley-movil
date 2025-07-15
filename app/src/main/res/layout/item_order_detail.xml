@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvOrder"
+    android:layout_width="220dp"
+    android:layout_height="wrap_content"
+    card_view:cardBackgroundColor="#18181b"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardElevation="4dp"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Imagen del producto -->
+        <ImageView
+            android:id="@+id/imgProduct"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="12dp"
+            android:background="#2d2d2d" />
+
+        <!-- Nombre del producto -->
+        <TextView
+            android:id="@+id/txtProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Producto: Silla Gamer"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#ffffff" />
+
+        <!-- ID del detalle -->
+        <TextView
+            android:id="@+id/txtProductId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID: 123456"
+            android:textSize="12sp"
+            android:textColor="#aaaaaa"
+            android:layout_marginTop="4dp" />
+
+        <!-- Precio unitario -->
+        <TextView
+            android:id="@+id/txtPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Precio: S/. 120.00"
+            android:textSize="14sp"
+            android:textColor="#ffffff"
+            android:layout_marginTop="4dp" />
+
+        <!-- Cantidad -->
+        <TextView
+            android:id="@+id/txtAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cantidad: 2"
+            android:textSize="14sp"
+            android:textColor="#ffffff"
+            android:layout_marginTop="2dp" />
+
+        <!-- Total -->
+        <TextView
+            android:id="@+id/txtTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total: S/. 240.00"
+            android:textSize="14sp"
+            android:textColor="#ffffff"
+            android:layout_marginTop="2dp" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

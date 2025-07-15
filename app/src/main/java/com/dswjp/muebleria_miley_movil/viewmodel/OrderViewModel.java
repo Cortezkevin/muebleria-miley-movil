@@ -14,6 +14,7 @@ import com.dswjp.muebleria_miley_movil.commons.SuccessResponseDTO;
 import com.dswjp.muebleria_miley_movil.dto.security.UserDTO;
 import com.dswjp.muebleria_miley_movil.repository.AuthRepository;
 import com.dswjp.muebleria_miley_movil.repository.OrderRepository;
+import com.dswjp.muebleria_miley_movil.sales.dto.order.DetailedOrderDTO;
 import com.dswjp.muebleria_miley_movil.security.dto.SessionDTO;
 
 import java.util.List;
@@ -29,5 +30,9 @@ public class OrderViewModel extends AndroidViewModel {
 
     public LiveData<SuccessResponseDTO<List<OrderDTO>>> getAllByUser(String userId) {
         return this.orderRepository.getAllByUser(userId);
+    }
+
+    public LiveData<SuccessResponseDTO<DetailedOrderDTO>> getOrderById(String orderId) {
+        return this.orderRepository.findById(orderId);
     }
 }

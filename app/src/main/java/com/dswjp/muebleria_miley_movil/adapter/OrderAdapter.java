@@ -1,5 +1,6 @@
 package com.dswjp.muebleria_miley_movil.adapter;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +14,20 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dswjp.muebleria_miley_movil.R;
+import com.dswjp.muebleria_miley_movil.activity.DetailOrderActivity;
 import com.dswjp.muebleria_miley_movil.api.ConfigApi;
 import com.dswjp.muebleria_miley_movil.dto.catalog.ProductDTO;
 import com.dswjp.muebleria_miley_movil.dto.sales.OrderDTO;
 import com.dswjp.muebleria_miley_movil.sales.enums.OrderStatus;
+import com.dswjp.muebleria_miley_movil.utils.DateSerializer;
+import com.dswjp.muebleria_miley_movil.utils.TimeSerializer;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -75,9 +83,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             }else {
                 txtOrderStatus.setTextColor(Color.YELLOW );
             }
-            /*cardViewProductPopular.setOnClickListener(v -> {
-                Toast.makeText(itemView.getContext(), "click en cardview", Toast.LENGTH_SHORT).show();
-            });*/
+            cvOrder.setOnClickListener(v -> {
+                final Intent intent = new Intent(itemView.getContext(), DetailOrderActivity.class);
+                final Gson g = new GsonBuilder()
+                        .registerTypeAdapter(Date.class, new DateSerializer())
+                        .registerTypeAdapter(Time.class, new TimeSerializer())
+                        .create();
+                intent.putExtra("detailOrders", g.toJson(orderDTO.getId()));
+            });
         }
     }
 }

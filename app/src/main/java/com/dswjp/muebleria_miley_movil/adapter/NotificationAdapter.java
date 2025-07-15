@@ -1,5 +1,6 @@
 package com.dswjp.muebleria_miley_movil.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             txtNotificationTitle.setText(notificationDTO.getTitle());
             txtNotificationBody.setText(notificationDTO.getBody());
             txtNotificationDate.setText(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(notificationDTO.getDate().getDate()));
+
+            /*cvNotification.setOnClickListener(v -> {
+
+            });*/
         }
     }
 }

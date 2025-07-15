@@ -12,6 +12,4 @@ public abstract class ProductImage {
     protected String image_id;
     protected String url;
 
-    public ProductImage(Object o, String imageId, String url) {
-    }
 }
