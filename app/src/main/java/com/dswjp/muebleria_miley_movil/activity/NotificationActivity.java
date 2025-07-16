@@ -49,6 +49,9 @@ public class NotificationActivity extends AppCompatActivity {
 
     private void initAdapter() {
         notificationAdapter = new NotificationAdapter(notificationDTO);
+        notificationViewModel.getAllFromSession().observe(this, notifications -> {
+            notificationAdapter.updateItems(notifications.getContent());
+        });
         binding.rvNotifications.setLayoutManager(new LinearLayoutManager(this));
         binding.rvNotifications.setAdapter(notificationAdapter);
     }

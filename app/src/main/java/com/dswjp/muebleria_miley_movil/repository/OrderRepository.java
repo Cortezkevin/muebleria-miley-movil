@@ -60,6 +60,7 @@ public class OrderRepository {
             public void onResponse(Call<SuccessResponseDTO<DetailedOrderDTO>> call, Response<SuccessResponseDTO<DetailedOrderDTO>> response) {
                 Log.d("OrderRepository","Response " + response.isSuccessful() + " " + response.message());
                 if (response.isSuccessful() && response.body() != null) {
+                    Log.d("OrderRepository","Data " + response.body());
                     mld.setValue(response.body());
                 } else {
                     mld.setValue(new SuccessResponseDTO<>());

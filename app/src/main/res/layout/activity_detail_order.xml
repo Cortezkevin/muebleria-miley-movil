@@ -206,12 +206,12 @@
                     android:id="@+id/btnMap"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:enabled="false"
                     android:layout_height="wrap_content"
                     android:text="Ver en el mapa"
                     android:textColor="#000000"
-                    android:backgroundTint="#A5FFAB"
-                    android:visibility="gone" />
-
+                    android:backgroundTint="#767A77"
+                    />
                 <Button
                     android:id="@+id/btnDownload"
                     android:layout_width="0dp"
