@@ -23,7 +23,7 @@
     <string name="nav_profile">Profile</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
+    <string name="menu_delivery">Delivery</string>
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="text_toast_ok">excelente, mensaje de toast</string>

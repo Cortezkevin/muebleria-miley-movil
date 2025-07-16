@@ -17,7 +17,7 @@
         android:label="@string/nav_cart"
         tools:layout="@layout/fragment_cart" />
     <fragment
-        android:id="@+id/nav_favorite"
+        android:id="@+id/nav_order"
         android:name="com.dswjp.muebleria_miley_movil.activity.fragment.OrderFragment"
         android:label="@string/nav_order"
         tools:layout="@layout/fragment_order" />
@@ -26,4 +26,9 @@
         android:name="com.dswjp.muebleria_miley_movil.activity.fragment.ProfileFragment"
         android:label="@string/nav_order"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/nav_delivery"
+        android:name="com.dswjp.muebleria_miley_movil.activity.DeliveryFragment"
+        android:label="fragment_delivery"
+        tools:layout="@layout/fragment_delivery" />
 </navigation>

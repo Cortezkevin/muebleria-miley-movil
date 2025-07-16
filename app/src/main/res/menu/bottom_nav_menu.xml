@@ -5,8 +5,8 @@
         android:icon="@drawable/icon_home"
         android:title="@string/nav_home" />
     <item
-        android:id="@+id/nav_favorite"
-        android:icon="@drawable/icon_favorite"
+        android:id="@+id/nav_order"
+        android:icon="@drawable/ic_order"
         android:title="@string/nav_order"/>
     <item
         android:id="@+id/nav_cart"

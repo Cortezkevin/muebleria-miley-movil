@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -100,10 +101,10 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 mAppBarConfiguration = new AppBarConfiguration.Builder(
-                        R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                        R.id.nav_home, R.id.nav_delivery, R.id.nav_slideshow)
                         .setOpenableLayout(drawer)
                         .build();
-                //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
+
                 NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             }
         });
@@ -178,6 +179,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.logout) {
             this.logout();
+            return true;
+        }
+        if (item.getItemId() == R.id.notification) {
+            startActivity(new Intent(this, NotificationActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
