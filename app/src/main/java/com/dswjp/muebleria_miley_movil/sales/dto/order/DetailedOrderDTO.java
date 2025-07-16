@@ -9,29 +9,29 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 public class DetailedOrderDTO {
-    String id;
-    String note;
-    BigDecimal subtotal;
-    BigDecimal shippingCost;
-    BigDecimal tax;
-    BigDecimal discount;
-    BigDecimal total;
-    UserOrderDTO user;
-    String shippingAddress;
-    String specificAddress;
-    Timestamp createdDate;
-    Timestamp cancelledDate;
-    Timestamp completedDate;
-    PaymentMethod paymentMethod;
-    OrderPreparationDTO preparation;
-    OrderShippingDTO shipping;
-    OrderStatus status;
-    List<OrderDetailDTO> orderDetails;
-    String invoiceUrl;
+    private String id;
+    private String note;
+    private BigDecimal subtotal;
+    private BigDecimal shippingCost;
+    private BigDecimal tax;
+    private BigDecimal discount;
+    private BigDecimal total;
+    private UserOrderDTO user;
+    private String shippingAddress;
+    private String specificAddress;
+    private Timestamp createdDate;
+    private Timestamp cancelledDate;
+    private Timestamp completedDate;
+    private PaymentMethod paymentMethod;
+    private OrderPreparationDTO preparation;
+    private OrderShippingDTO shipping;
+    private OrderStatus status;
+    private List<OrderDetailDTO> orderDetails;
+    private String invoiceUrl;
 }

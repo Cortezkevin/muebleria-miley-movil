@@ -1,5 +1,7 @@
 package com.dswjp.muebleria_miley_movil.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -33,16 +35,20 @@ public class ProfileRepository {
     }
 
     public LiveData<SuccessResponseDTO<PersonalDataDTO>> getFromSession(){
+        Log.d("ProfileRepository","Calling method getFromSession");
         final MutableLiveData<SuccessResponseDTO<PersonalDataDTO>> mld = new MutableLiveData<>();
-        this.profileApi.getFromSession().enqueue(new Callback<>() {
+        this.profileApi.getFromSession().enqueue(new Callback<SuccessResponseDTO<PersonalDataDTO>>() {
             @Override
             public void onResponse(Call<SuccessResponseDTO<PersonalDataDTO>> call, Response<SuccessResponseDTO<PersonalDataDTO>> response) {
+                Log.d("ProfileRepository","Response getFromSession " + response.isSuccessful());
+                Log.d("ProfileRepository","Data getFromSession " + response.body().toString());
                 mld.setValue(response.body());
             }
 
             @Override
             public void onFailure(Call<SuccessResponseDTO<PersonalDataDTO>> call, Throwable t) {
                 mld.setValue(new SuccessResponseDTO<>());
+                Log.d("ProfileRepository","Error consumes api " + t.getMessage());
                 t.printStackTrace();
             }
         });

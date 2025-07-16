@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -28,10 +28,13 @@ import com.google.gson.GsonBuilder;
 
 import org.w3c.dom.Text;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import lombok.SneakyThrows;
 
 public class DetailOrderActivity extends AppCompatActivity {
 
@@ -47,28 +50,29 @@ public class DetailOrderActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         orderViewModel = new ViewModelProvider(this).get(OrderViewModel.class);
-        final String orderId = this.getIntent().getStringExtra("detailOrders");
+        final String orderId = this.getIntent().getStringExtra("orderId");
 
+        Log.d("DetailOrderActivity", "Order Id " + orderId);
         orderViewModel.getOrderById(orderId).observe(this, response -> {
             if (response != null && response.getContent() != null) {
                 detailedOrderDTO = response.getContent();
 
-                TextView txtOrderCreatedDate = binding.orderCompletedDate;
+                TextView txtOrderCreatedDate = binding.orderCreatedDate;
                 TextView txtOrderCompletedDate = binding.orderCompletedDate;
                 TextView txtPaymentMethod = binding.paymentMethod;
                 TextView txtShippingAddress = binding.shippingAddress;
                 TextView txtTax = binding.tax;
                 TextView txtOrderTotal = binding.total;
-
-                txtOrderCreatedDate.setText(detailedOrderDTO.getCreatedDate() != null ? new SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault()).format(detailedOrderDTO.getCreatedDate()) : "No completado");
-                txtOrderCompletedDate.setText(detailedOrderDTO.getCompletedDate() != null ? new SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault()).format(detailedOrderDTO.getCompletedDate()) : "No completado");
-                txtPaymentMethod.setText(detailedOrderDTO.getPaymentMethod().ordinal());
+                txtOrderCreatedDate.setText(formatDate(detailedOrderDTO.getCreatedDate().toString()));
+                txtOrderCompletedDate.setText(detailedOrderDTO.getCompletedDate() != null ? formatDate(detailedOrderDTO.getCompletedDate().toString()) : "No completado");
+                binding.orderId.setText(detailedOrderDTO.getId());
+                txtPaymentMethod.setText(detailedOrderDTO.getPaymentMethod().name());
                 txtShippingAddress.setText(detailedOrderDTO.getShippingAddress());
                 txtTax.setText(String.format(Locale.getDefault(), "%.2f", detailedOrderDTO.getTax()));
                 txtOrderTotal.setText(String.format(Locale.getDefault(), "%.2f", detailedOrderDTO.getTotal()));
 
                 RecyclerView recyclerView = binding.recyclerOrderDetails;
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
                 OrderDetailsAdapter adapter = new OrderDetailsAdapter(detailedOrderDTO.getOrderDetails());
                 recyclerView.setAdapter(adapter);
 
@@ -76,10 +80,21 @@ public class DetailOrderActivity extends AppCompatActivity {
                 Toast.makeText(this, "no se pudo cargar la orden", Toast.LENGTH_SHORT).show();
             }
         });
+
+        init();
+    }
+
+    @SneakyThrows
+    private String formatDate(String date) {
+        SimpleDateFormat formatIn = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat formatOut = new SimpleDateFormat("dd/MM/yyyy");
+        Date formatedDate = (Date) formatIn.parse(date);
+        return formatOut.format(formatedDate);
     }
 
     private void init() {
-        Toolbar toolbar = this.findViewById(R.id.toolbar);
+        Toolbar toolbar = this.findViewById(R.id.order_detail_toolbar);
+        setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(v -> {//Reemplazo con lamba
             this.finish();

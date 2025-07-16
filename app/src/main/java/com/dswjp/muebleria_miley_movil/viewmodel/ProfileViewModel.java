@@ -32,7 +32,9 @@ public class ProfileViewModel extends AndroidViewModel {
     }
 
     public void loadPersonalData() {
+        Log.d("ProfileViewModel","Calling method loadPersonalData");
         profileRepository.getFromSession().observeForever(res -> {
+            Log.d("ProfileViewModel","Response from getSession " + res.toString());
             personalData.setValue(res.getContent());
         });
     }

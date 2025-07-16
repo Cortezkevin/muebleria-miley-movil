@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private AuthViewModel authViewModel;
     private ProfileViewModel profileViewModel;
     private SessionManager sessionManager;
-
+    private TextView txtNavUserFullName, txtNavUserEmail;
 
     private final ActivityResultLauncher<String> notificationPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -70,10 +70,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initViewModel();
 
-        /*SharedPreferencesHelpers.getToken(getApplicationContext())
-                .ifPresent(ConfigApi::setToken);*/
-        sessionManager = SessionManager.getInstance();
+        SharedPreferencesHelpers.getToken(this).ifPresent(ConfigApi::setToken);
 
+        sessionManager = SessionManager.getInstance();
 
         GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
 
@@ -84,20 +83,31 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
         NavigationUI.setupWithNavController(binding.appBarHome.bottomNavigation, navController);
 
-        SessionManager sessionManager = ((App) this.getApplicationContext()).getSessionManager();
+        SessionManager sessionManager = SessionManager.getInstance();//((App) this.getApplicationContext()).getSessionManager();
 
-        if(sessionManager.isAdmin() || !Objects.equals(sessionManager.getAccessType(), AccessType.CLIENT)){
-            DrawerLayout drawer = binding.drawerLayout;
-            NavigationView navigationView = binding.navView;
-            // Passing each menu ID as a set of Ids because each
-            // menu should be considered as top level destinations.
-            mAppBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
-                    .setOpenableLayout(drawer)
-                    .build();
-            //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
-            NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        }
+        sessionManager.getAuth().observe(this, auth -> {
+            if(auth.isAdmin() || !Objects.equals(auth.getAccessType(), AccessType.CLIENT)){
+                DrawerLayout drawer = binding.drawerLayout;
+                NavigationView navigationView = binding.navView;
+
+                View navHeader = binding.navView.getHeaderView(0);
+                txtNavUserFullName = navHeader.findViewById(R.id.txtNavUserFullName);
+                txtNavUserEmail = navHeader.findViewById(R.id.txtNavUserEmail);
+                txtNavUserEmail.setText(auth.getEmail());
+
+                sessionManager.getPersonalData().observe(this, personalData -> {
+                    txtNavUserFullName.setText(personalData.getFullName());
+                });
+
+                mAppBarConfiguration = new AppBarConfiguration.Builder(
+                        R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                        .setOpenableLayout(drawer)
+                        .build();
+                //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
+                NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+            }
+        });
+
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -122,15 +132,11 @@ public class MainActivity extends AppCompatActivity {
     private void loadProfileData(){
         profileViewModel.getPersonalData().observe(this, response -> {
             sessionManager.loadPersonalData(response);
-            View navHeader = binding.navView.getHeaderView(0);
-            TextView txtNavUserFullName = navHeader.findViewById(R.id.txtNavUserFullName);
-            TextView txtNavUserEmail = navHeader.findViewById(R.id.txtNavUserEmail);
-            txtNavUserEmail.setText(sessionManager.getEmail());
-            txtNavUserFullName.setText(response.getFullName());
+            //txtNavUserFullName.setText(response.getFirstName() + " " + response.getLastName());
         });
 
-        profileViewModel.getAddress().observe(this, resposne -> {
-            sessionManager.loadAddress(resposne);
+        profileViewModel.getAddress().observe(this, response -> {
+            sessionManager.loadAddress(response);
         });
     }
     private void requestNotificationPermission() {
@@ -181,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferencesHelpers.removeUserId(this);
         SharedPreferencesHelpers.removeEmail(this);
         SharedPreferencesHelpers.removeRoles(this);
+        sessionManager.clearSession();
         this.finish();
         this.overridePendingTransition(R.anim.left_in, R.anim.left_out);
     }

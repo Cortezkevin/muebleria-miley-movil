@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,10 @@ public class OrderFragment extends Fragment {
 
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_item_spacing);
         binding.rvOrders.addItemDecoration(new GridSpacingItemDecoration(1, spacingInPixels, true));
+
+        binding.llOrders.setOnClickListener(v -> {
+            Log.d("OrderFragment","Click LinearLayout");
+        });
 
         return binding.getRoot();
     }

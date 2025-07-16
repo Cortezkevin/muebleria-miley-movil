@@ -70,6 +70,7 @@ public class ProductPopularAdapter extends RecyclerView.Adapter<ProductPopularAd
                     .into(imgProductPopular);
             nameProductPopular.setText(productDTO.getName());
             priceProductPopular.setText(String.format(Locale.getDefault(), "S/ %.2f", productDTO.getPrice()));
+
             cardViewProductPopular.setOnClickListener(v -> {
                 Toast.makeText(itemView.getContext(), "click en cardview", Toast.LENGTH_SHORT).show();
             });

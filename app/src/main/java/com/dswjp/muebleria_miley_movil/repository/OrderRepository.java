@@ -1,5 +1,7 @@
 package com.dswjp.muebleria_miley_movil.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -56,6 +58,7 @@ public class OrderRepository {
         this.orderApi.findById(orderId).enqueue(new Callback<SuccessResponseDTO<DetailedOrderDTO>>() {
             @Override
             public void onResponse(Call<SuccessResponseDTO<DetailedOrderDTO>> call, Response<SuccessResponseDTO<DetailedOrderDTO>> response) {
+                Log.d("OrderRepository","Response " + response.isSuccessful() + " " + response.message());
                 if (response.isSuccessful() && response.body() != null) {
                     mld.setValue(response.body());
                 } else {
@@ -66,6 +69,7 @@ public class OrderRepository {
             @Override
             public void onFailure(Call<SuccessResponseDTO<DetailedOrderDTO>> call, Throwable t) {
                 mld.setValue(new SuccessResponseDTO<>());
+                Log.d("OrderRepository","Error findById " + t.getMessage());
                 t.printStackTrace();
             }
         });

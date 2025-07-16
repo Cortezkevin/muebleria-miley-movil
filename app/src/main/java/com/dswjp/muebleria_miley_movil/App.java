@@ -21,6 +21,7 @@ import lombok.Getter;
 
 public class App extends Application {
     private Context context;
+
     @Getter
     private SessionManager sessionManager;
     private AuthRepository authRepository;

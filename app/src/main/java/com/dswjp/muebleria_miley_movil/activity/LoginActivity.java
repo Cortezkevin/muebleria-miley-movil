@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
     private AuthViewModel authViewModel;
+    private SessionManager sessionManager;
     private static final String TAG = "MainActivity";
 
     @Override
@@ -54,6 +55,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        sessionManager = SessionManager.getInstance();
 
         this.initViewModel();
         this.init();
@@ -92,6 +95,8 @@ public class LoginActivity extends AppCompatActivity {
                             SharedPreferencesHelpers.saveUserId(this, sessionDTO.getId());
                             SharedPreferencesHelpers.saveEmail(this, sessionDTO.getEmail());
                             SharedPreferencesHelpers.saveRoles(this, sessionDTO.getRoles());
+
+                            sessionManager.loadSession(sessionDTO);
 
                             binding.edtMail.setText("");
                             binding.edtPassword.setText("");
@@ -152,22 +157,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        App app = (App) this.getApplicationContext();
-        SessionManager sessionManager = app.getSessionManager();
-        if(sessionManager.isLogged()){
+        boolean hasActiveSession = sessionManager.getAuth().getValue().isLogged();
+        if(hasActiveSession){
             toastOk("se detecto una sesión activa, el login será omitido");
             this.startActivity(new Intent(this, MainActivity.class));
             this.overridePendingTransition(R.anim.left_in, R.anim.left_out);
         }
-        /*SharedPreferencesHelpers.getToken(this).ifPresent(token -> {
-            authViewModel.validateSession().observe(this, response -> {
-                if(response.isSuccess()){
-                    toastOk("se detecto una sesión activa, el login será omitido");
-                    this.startActivity(new Intent(this, MainActivity.class));
-                    this.overridePendingTransition(R.anim.left_in, R.anim.left_out);
-                }
-            });
-        });*/
     }
 
     private void toastOk(String message) {

@@ -1,5 +1,7 @@
 package com.dswjp.muebleria_miley_movil.context.SessionManager;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -23,15 +25,18 @@ public class SessionManager {
     private boolean isAdmin = false;
     private AccessType accessType = AccessType.CLIENT;
 
+    private final MutableLiveData<AuthDTO> auth = new MutableLiveData<>();
     private final MutableLiveData<PersonalDataDTO> personalData = new MutableLiveData<>();
     private final MutableLiveData<AddressDTO> address = new MutableLiveData<>();
 
     public LiveData<PersonalDataDTO> getPersonalData() {
         return personalData;
     }
-
-    private SessionManager() {}
-
+    private SessionManager() {
+        auth.setValue(AuthDTO.empty());
+        address.setValue(new AddressDTO());
+        personalData.setValue(PersonalDataDTO.empty());
+    }
     public static SessionManager getInstance() {
         if (instance == null) {
             instance = new SessionManager();
@@ -40,21 +45,25 @@ public class SessionManager {
     }
 
     public void loadSession(SessionDTO sessionDTO){
-        this.userId = sessionDTO.getId();
-        this.isAdmin = sessionDTO.getRoles().contains("ROLE_ADMIN");
-        this.isLogged = true;
-        this.email = sessionDTO.getEmail();
         List<String> roles = sessionDTO.getRoles();
-        this.accessType = roles.contains("ROLE_ADMIN")
+        AccessType accessType = roles.contains("ROLE_ADMIN")
                 ? AccessType.ADMIN
                 : roles.contains("ROLE_WAREHOUSE")
                 ? AccessType.WAREHOUSE
                 : roles.contains("ROLE_TRANSPORT")
                 ? AccessType.TRANSPORT
                 : AccessType.CLIENT;
+        this.auth.setValue(AuthDTO.builder()
+                        .userId(sessionDTO.getId())
+                        .isAdmin(sessionDTO.getRoles().contains("ROLE_ADMIN"))
+                        .isLogged(true)
+                        .email(sessionDTO.getEmail())
+                        .accessType(accessType)
+                .build());
     }
 
     public void loadPersonalData(PersonalDataDTO personalDataDTO) {
+        //Log.d("SessionManager", "Load Personal Data " + personalDataDTO.toString());
         personalData.setValue(personalDataDTO);
     }
 
@@ -62,11 +71,12 @@ public class SessionManager {
         address.setValue(addressDTO);
     }
     public void clearSession() {
-        this.isLogged = false;
+        /*this.isLogged = false;
         this.isAdmin = false;
         this.accessType = AccessType.CLIENT;
-        this.userId = null;
-        this.personalData.setValue(null);
+        this.userId = null;*/
+        this.auth.setValue(AuthDTO.empty());
+        this.personalData.setValue(PersonalDataDTO.empty());
         this.address.setValue(null);
     }
 

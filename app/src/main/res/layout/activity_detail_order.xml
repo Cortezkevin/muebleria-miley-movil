@@ -17,12 +17,12 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/order_detail_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="#2e2e2e"
                 app:navigationIcon="@drawable/ic_back"
-                app:title="Detalle de Orden #..."
+                app:title="Detalle de Pedido"
                 app:titleTextColor="@color/white" />
         </com.google.android.material.appbar.AppBarLayout>
     </LinearLayout>

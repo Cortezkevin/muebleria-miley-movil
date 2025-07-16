@@ -2,6 +2,7 @@ package com.dswjp.muebleria_miley_movil.adapter;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.setItem(this.orders.get(position));
+
+        holder.itemView.setOnClickListener(v -> {
+            Log.d("OrderAdapter","Click Order " + position);
+            final Intent intent = new Intent(holder.itemView.getContext(), DetailOrderActivity.class);
+            final Gson g = new GsonBuilder()
+                    .registerTypeAdapter(Date.class, new DateSerializer())
+                    .registerTypeAdapter(Time.class, new TimeSerializer())
+                    .create();
+            intent.putExtra("orderId",this.orders.get(position).getId() /*g.toJson(orders.get(position).getId())*/);
+            holder.itemView.getContext().startActivity(intent);
+        });
     }
 
     @Override
@@ -83,14 +95,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             }else {
                 txtOrderStatus.setTextColor(Color.YELLOW );
             }
-            cvOrder.setOnClickListener(v -> {
-                final Intent intent = new Intent(itemView.getContext(), DetailOrderActivity.class);
-                final Gson g = new GsonBuilder()
-                        .registerTypeAdapter(Date.class, new DateSerializer())
-                        .registerTypeAdapter(Time.class, new TimeSerializer())
-                        .create();
-                intent.putExtra("detailOrders", g.toJson(orderDTO.getId()));
-            });
         }
     }
 }

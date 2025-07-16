@@ -46,7 +46,6 @@ public class HomeFragment extends Fragment {
     private SliderAdapter sliderAdapter;
     private SliderView svCarrusel;
     private ProductViewModel productViewModel;
-    private ProfileViewModel profileViewModel;
     private RecyclerView rcvProductsPopular;
     private ProductPopularAdapter productAdapter;
     private List<ProductDTO> productsPopular = new ArrayList<>();
@@ -70,7 +69,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void init(View view) {
-        sessionManager.getPersonalData().observe(getViewLifecycleOwner(), personalData -> {
+        sessionManager.getPersonalData().observeForever(personalData -> {
             binding.txtHomeEmail.setText(personalData.getFullName());
         });
 
@@ -88,7 +87,7 @@ public class HomeFragment extends Fragment {
 
 
         productViewModel = vmp.get(ProductViewModel.class);
-        profileViewModel = vmp.get(ProfileViewModel.class);
+        //profileViewModel = vmp.get(ProfileViewModel.class);
     }
 
     private void loadData() {

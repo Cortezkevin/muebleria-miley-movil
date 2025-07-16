@@ -35,9 +35,9 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
         OrderDetailDTO detail = orderDetails.get(position);
 
         holder.txtProductName.setText(detail.getName());
-        holder.txtProductId.setText(detail.getId());
+        //holder.txtProductId.setText(detail.getId());
         holder.txtPrice.setText(String.format("Precio: S/. %.2f", detail.getPrice()));
-        holder.txtAmount.setText(detail.getAmount());
+        holder.txtAmount.setText("Cantidad: " + detail.getAmount().toString());
         holder.txtTotal.setText(String.format("Total: S/. %.2f", detail.getTotal()));
 
         Glide.with(holder.itemView.getContext())
@@ -53,13 +53,13 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
     }
 
     public static class OrderDetailViewHolder extends RecyclerView.ViewHolder {
-        TextView txtProductName, txtProductId, txtPrice, txtAmount, txtTotal;
+        TextView txtProductName, txtPrice, txtAmount, txtTotal;
         ImageView imgProduct;
 
         public OrderDetailViewHolder(@NonNull View itemView) {
             super(itemView);
             txtProductName = itemView.findViewById(R.id.txtProductName);
-            txtProductId = itemView.findViewById(R.id.txtProductId);
+            //txtProductId = itemView.findViewById(R.id.txtProductId);
             txtPrice = itemView.findViewById(R.id.txtPrice);
             txtAmount = itemView.findViewById(R.id.txtAmount);
             txtTotal = itemView.findViewById(R.id.txtTotal);
