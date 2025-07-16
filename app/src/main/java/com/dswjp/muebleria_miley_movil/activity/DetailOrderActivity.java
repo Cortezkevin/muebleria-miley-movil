@@ -2,15 +2,13 @@ package com.dswjp.muebleria_miley_movil.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,19 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dswjp.muebleria_miley_movil.R;
 import com.dswjp.muebleria_miley_movil.adapter.OrderDetailsAdapter;
 import com.dswjp.muebleria_miley_movil.databinding.ActivityDetailOrderBinding;
-import com.dswjp.muebleria_miley_movil.databinding.ActivityMainBinding;
 import com.dswjp.muebleria_miley_movil.sales.dto.order.DetailedOrderDTO;
-import com.dswjp.muebleria_miley_movil.utils.DateSerializer;
-import com.dswjp.muebleria_miley_movil.utils.TimeSerializer;
 import com.dswjp.muebleria_miley_movil.viewmodel.OrderViewModel;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import org.w3c.dom.Text;
 
 import java.util.Date;
-import java.sql.Time;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -63,6 +52,8 @@ public class DetailOrderActivity extends AppCompatActivity {
                 TextView txtShippingAddress = binding.shippingAddress;
                 TextView txtTax = binding.tax;
                 TextView txtOrderTotal = binding.total;
+                Button btnMap = binding.btnMap;
+
                 txtOrderCreatedDate.setText(formatDate(detailedOrderDTO.getCreatedDate().toString()));
                 txtOrderCompletedDate.setText(detailedOrderDTO.getCompletedDate() != null ? formatDate(detailedOrderDTO.getCompletedDate().toString()) : "No completado");
                 binding.orderId.setText(detailedOrderDTO.getId());
@@ -70,6 +61,13 @@ public class DetailOrderActivity extends AppCompatActivity {
                 txtShippingAddress.setText(detailedOrderDTO.getShippingAddress());
                 txtTax.setText(String.format(Locale.getDefault(), "%.2f", detailedOrderDTO.getTax()));
                 txtOrderTotal.setText(String.format(Locale.getDefault(), "%.2f", detailedOrderDTO.getTotal()));
+
+                if (detailedOrderDTO.getShipping().getStatus().name().equalsIgnoreCase("EN_TRANSITO")) {
+                    btnMap.setVisibility(View.VISIBLE);
+                    btnMap.setOnClickListener(v -> {
+                        Toast.makeText(this, "Ir al mapa con dirección: " + detailedOrderDTO.getShippingAddress(), Toast.LENGTH_SHORT).show();
+                    });
+                }
 
                 RecyclerView recyclerView = binding.recyclerOrderDetails;
                 recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -83,6 +81,8 @@ public class DetailOrderActivity extends AppCompatActivity {
 
         init();
     }
+
+
 
     @SneakyThrows
     private String formatDate(String date) {

@@ -5,6 +5,11 @@ import com.dswjp.muebleria_miley_movil.warehouse.dto.carrier.CarrierDTO;
 
 import java.sql.Timestamp;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class OrderShippingDTO {
     String id;
     String userIdFromCarrier;
