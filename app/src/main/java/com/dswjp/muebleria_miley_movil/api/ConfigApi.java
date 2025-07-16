@@ -35,6 +35,7 @@ public class ConfigApi {
     private static OrderApi orderApi;
     private static ProfileApi profileApi;
     private static AddressApi addressApi;
+    private static ShippingLocationApi shippingLocationApi;
 
     private static NotificationApi notificationApi;
 
@@ -135,5 +136,12 @@ public class ConfigApi {
             notificationApi = retrofit.create(NotificationApi.class);
         }
         return notificationApi;
+    }
+
+    public static ShippingLocationApi getShippingLocationApi() {
+        if (shippingLocationApi == null) {
+            shippingLocationApi = retrofit.create(ShippingLocationApi.class);
+        }
+        return shippingLocationApi;
     }
 }

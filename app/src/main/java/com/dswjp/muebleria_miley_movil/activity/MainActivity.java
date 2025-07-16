@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -27,6 +28,7 @@ import com.dswjp.muebleria_miley_movil.enums.AccessType;
 import com.dswjp.muebleria_miley_movil.utils.helpers.SharedPreferencesHelpers;
 import com.dswjp.muebleria_miley_movil.viewmodel.AuthViewModel;
 import com.dswjp.muebleria_miley_movil.viewmodel.ProfileViewModel;
+import com.dswjp.muebleria_miley_movil.viewmodel.ShippingLocationViewModel;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private AuthViewModel authViewModel;
     private ProfileViewModel profileViewModel;
     private SessionManager sessionManager;
+    private ShippingLocationViewModel shippingLocationViewModel;
     private TextView txtNavUserFullName, txtNavUserEmail;
 
     private final ActivityResultLauncher<String> notificationPermissionLauncher =
@@ -105,6 +108,11 @@ public class MainActivity extends AppCompatActivity {
                         .build();
                 //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
                 NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+                if(auth.getAccessType().equals(AccessType.TRANSPORT)){
+                    shippingLocationViewModel.getAllReadyToSend().observe(this, orders -> {
+                        Log.d("MainActivity","Pedidos listos a iniciar recorrido " + orders.toString());
+                    });
+                }
             }
         });
 
@@ -127,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
     private void initViewModel() {
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+        shippingLocationViewModel = new ViewModelProvider(this).get(ShippingLocationViewModel.class);
     }
 
     private void loadProfileData(){
@@ -178,6 +187,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.logout) {
             this.logout();
+            return true;
+        }
+        if(item.getItemId() == R.id.notification){
+            startActivity(new Intent(this, NotificationActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

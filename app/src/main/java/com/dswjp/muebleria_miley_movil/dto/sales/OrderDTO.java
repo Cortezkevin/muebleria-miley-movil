@@ -9,8 +9,10 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
+@ToString
 public class OrderDTO {
     private String id;
     private BigDecimal total;

@@ -1,5 +1,7 @@
 package com.dswjp.muebleria_miley_movil.activity;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +19,9 @@ import com.dswjp.muebleria_miley_movil.R;
 import com.dswjp.muebleria_miley_movil.adapter.OrderDetailsAdapter;
 import com.dswjp.muebleria_miley_movil.databinding.ActivityDetailOrderBinding;
 import com.dswjp.muebleria_miley_movil.sales.dto.order.DetailedOrderDTO;
+import com.dswjp.muebleria_miley_movil.sales.enums.ShippingStatus;
 import com.dswjp.muebleria_miley_movil.viewmodel.OrderViewModel;
+import com.google.gson.Gson;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -62,12 +66,19 @@ public class DetailOrderActivity extends AppCompatActivity {
                 txtTax.setText(String.format(Locale.getDefault(), "%.2f", detailedOrderDTO.getTax()));
                 txtOrderTotal.setText(String.format(Locale.getDefault(), "%.2f", detailedOrderDTO.getTotal()));
 
-                if (detailedOrderDTO.getShipping().getStatus().name().equalsIgnoreCase("EN_TRANSITO")) {
+                if (detailedOrderDTO.getShipping() != null && detailedOrderDTO.getShipping().getStatus().equals(ShippingStatus.EN_TRANSITO)) {
                     btnMap.setVisibility(View.VISIBLE);
+                    btnMap.setBackgroundColor(Color.parseColor("#A5FFAB"));
                     btnMap.setOnClickListener(v -> {
                         Toast.makeText(this, "Ir al mapa con dirección: " + detailedOrderDTO.getShippingAddress(), Toast.LENGTH_SHORT).show();
                     });
                 }
+                binding.btnDownload.setOnClickListener(v -> {
+                    Intent intent = new Intent(this, MapsActivity.class);
+                    intent.putExtra("orderShipping", new Gson().toJson(detailedOrderDTO.getShipping()));
+                    this.startActivity(intent);
+                    this.overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                });
 
                 RecyclerView recyclerView = binding.recyclerOrderDetails;
                 recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
