@@ -35,4 +35,8 @@ public class OrderViewModel extends AndroidViewModel {
     public LiveData<SuccessResponseDTO<DetailedOrderDTO>> getOrderById(String orderId) {
         return this.orderRepository.findById(orderId);
     }
+
+    public LiveData<SuccessResponseDTO<List<OrderDTO>>> getAllReadyToSend() {
+        return this.orderRepository.getAllReadyToSend();
+    }
 }

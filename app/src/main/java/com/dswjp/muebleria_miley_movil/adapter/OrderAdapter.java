@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
-    private List<OrderDTO> orders = new ArrayList<>();
+    private List<OrderDTO> orders;
 
     public OrderAdapter(List<OrderDTO> orders) {
         this.orders = orders;

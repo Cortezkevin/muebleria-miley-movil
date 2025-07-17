@@ -76,4 +76,28 @@ public class OrderRepository {
         });
         return mld;
     }
+
+    public LiveData<SuccessResponseDTO<List<OrderDTO>>> getAllReadyToSend() {
+        final MutableLiveData<SuccessResponseDTO<List<OrderDTO>>> mld = new MutableLiveData<>();
+        this.orderApi.getAllReadyToSend().enqueue(new Callback<SuccessResponseDTO<List<OrderDTO>>>() {
+            @Override
+            public void onResponse(Call<SuccessResponseDTO<List<OrderDTO>>> call, Response<SuccessResponseDTO<List<OrderDTO>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("OrderRepository","Data " + response.body());
+                    mld.setValue(response.body());
+                } else {
+                    mld.setValue(new SuccessResponseDTO<>());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SuccessResponseDTO<List<OrderDTO>>> call, Throwable t) {
+                mld.setValue(new SuccessResponseDTO<>());
+                Log.d("OrderRepository","Error findById " + t.getMessage());
+                t.printStackTrace();
+            }
+        });
+        return mld;
+    }
+
 }

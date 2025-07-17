@@ -18,4 +18,7 @@ public interface OrderApi {
 
     @GET(base + "/{orderId}")
     Call<SuccessResponseDTO<DetailedOrderDTO>> findById(@Path("orderId") String orderId);
+
+    @GET(base)
+    Call<SuccessResponseDTO<List<OrderDTO>>> getAllReadyToSend();
 }

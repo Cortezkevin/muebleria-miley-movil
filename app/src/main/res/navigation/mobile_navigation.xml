@@ -28,7 +28,7 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/nav_delivery"
-        android:name="com.dswjp.muebleria_miley_movil.activity.DeliveryFragment"
+        android:name="com.dswjp.muebleria_miley_movil.activity.fragment.DeliveryFragment"
         android:label="fragment_delivery"
         tools:layout="@layout/fragment_delivery" />
 </navigation>
